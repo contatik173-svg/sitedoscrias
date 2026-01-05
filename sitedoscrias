@@ -457,6 +457,75 @@
             color: var(--text-light);
         }
 
+        /* Upload de Imagem */
+        .image-upload-container {
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            border: 2px dashed rgba(139, 0, 255, 0.3);
+        }
+
+        .upload-area {
+            text-align: center;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: rgba(139, 0, 255, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--purple-accent);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            margin-top: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .image-preview.active {
+            display: block;
+        }
+
+        .upload-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+        }
+
         .btn-save {
             background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
             color: white;
@@ -543,6 +612,10 @@
             .customers-table {
                 display: block;
                 overflow-x: auto;
+            }
+            
+            .upload-options {
+                flex-direction: column;
             }
         }
     </style>
@@ -827,13 +900,51 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">URL da Imagem:</label>
-                            <input type="url" class="form-input" id="productImage" placeholder="https://exemplo.com/imagem.jpg" required>
-                            <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
-                                Exemplos:<br>
-                                Free Fire: https://i.imgur.com/4Qp6Q8s.png<br>
-                                Roblox: https://i.imgur.com/Vv7Q2ZL.png
-                            </small>
+                            <label class="form-label">Imagem do Produto:</label>
+                            <div class="image-upload-container">
+                                <!-- Área de Upload -->
+                                <div class="upload-area" id="uploadArea">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        Arraste e solte uma imagem aqui<br>
+                                        ou clique para selecionar
+                                    </div>
+                                    <input type="file" class="file-input" id="imageInput" accept="image/*">
+                                    <button type="button" class="upload-btn" onclick="document.getElementById('imageInput').click()">
+                                        <i class="fas fa-folder-open"></i> Escolher Arquivo
+                                    </button>
+                                </div>
+                                
+                                <!-- Pré-visualização -->
+                                <div style="text-align: center; margin-top: 1rem;">
+                                    <img id="imagePreview" class="image-preview" src="" alt="Pré-visualização">
+                                </div>
+                                
+                                <!-- Opções -->
+                                <div class="upload-options">
+                                    <button type="button" class="upload-btn" onclick="useUploadedImage()" id="useImageBtn" style="display: none;">
+                                        <i class="fas fa-check"></i> Usar Esta Imagem
+                                    </button>
+                                    <button type="button" class="upload-btn" onclick="clearImage()" id="clearImageBtn" style="display: none; background: var(--danger);">
+                                        <i class="fas fa-times"></i> Remover Imagem
+                                    </button>
+                                </div>
+                                
+                                <!-- Ou use URL -->
+                                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 0, 255, 0.3);">
+                                    <div class="form-group">
+                                        <label class="form-label" style="margin-bottom: 0.5rem;">OU Cole URL da Imagem:</label>
+                                        <input type="url" class="form-input" id="productImage" placeholder="https://exemplo.com/imagem.jpg">
+                                        <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
+                                            Exemplos:<br>
+                                            Free Fire: https://i.imgur.com/4Qp6Q8s.png<br>
+                                            Roblox: https://i.imgur.com/Vv7Q2ZL.png
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
                         <button type="submit" class="btn-save">
@@ -933,6 +1044,7 @@
         let isAdminLoggedIn = false;
         let pixConfig = null;
         let currentUser = null;
+        let uploadedImage = null;
         
         // Produtos iniciais
         const initialProducts = [
@@ -990,6 +1102,98 @@
             // Adicionar atalho secreto para o painel admin
             setupAdminShortcut();
         });
+        
+        // =================== SISTEMA DE UPLOAD DE IMAGEM ===================
+        
+        function setupImageUpload() {
+            const imageInput = document.getElementById('imageInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const imagePreview = document.getElementById('imagePreview');
+            const useImageBtn = document.getElementById('useImageBtn');
+            const clearImageBtn = document.getElementById('clearImageBtn');
+            
+            // Clique na área de upload
+            uploadArea.addEventListener('click', function(e) {
+                if (e.target !== imageInput) {
+                    imageInput.click();
+                }
+            });
+            
+            // Arrastar e soltar
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.background = 'rgba(139, 0, 255, 0.2)';
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.style.background = '';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.background = '';
+                
+                if (e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.type.startsWith('image/')) {
+                        handleImageFile(file);
+                    } else {
+                        alert('Por favor, selecione apenas arquivos de imagem!');
+                    }
+                }
+            });
+            
+            // Selecionar arquivo
+            imageInput.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    if (file.type.startsWith('image/')) {
+                        handleImageFile(file);
+                    } else {
+                        alert('Por favor, selecione apenas arquivos de imagem!');
+                        this.value = '';
+                    }
+                }
+            });
+            
+            function handleImageFile(file) {
+                // Verificar tamanho (máximo 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('A imagem é muito grande! Tamanho máximo: 5MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.add('active');
+                    useImageBtn.style.display = 'inline-block';
+                    clearImageBtn.style.display = 'inline-block';
+                    
+                    // Converter para Base64
+                    uploadedImage = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function useUploadedImage() {
+            if (uploadedImage) {
+                document.getElementById('productImage').value = uploadedImage;
+                alert('Imagem selecionada! Agora você pode adicionar o produto.');
+            }
+        }
+        
+        function clearImage() {
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imagePreview').src = '';
+            document.getElementById('imagePreview').classList.remove('active');
+            document.getElementById('useImageBtn').style.display = 'none';
+            document.getElementById('clearImageBtn').style.display = 'none';
+            uploadedImage = null;
+            document.getElementById('productImage').value = '';
+        }
         
         // =================== SISTEMA DE USUÁRIOS ===================
         
@@ -1364,6 +1568,8 @@
                 showTab('products');
                 displayAdminProducts();
                 displayCustomers();
+                // Configurar upload de imagem
+                setupImageUpload();
             } else {
                 alert('Senha incorreta!');
             }
@@ -1377,8 +1583,13 @@
             const price = parseFloat(document.getElementById('productPrice').value);
             const image = document.getElementById('productImage').value;
             
-            if (!name || !game || !price || !image) {
-                alert('Preencha todos os campos!');
+            if (!name || !game || !price) {
+                alert('Preencha todos os campos obrigatórios!');
+                return;
+            }
+            
+            if (!image) {
+                alert('Por favor, selecione uma imagem ou cole uma URL!');
                 return;
             }
             
@@ -1397,6 +1608,7 @@
             
             // Limpar formulário
             document.getElementById('addProductForm').reset();
+            clearImage();
             
             alert('Produto adicionado com sucesso!');
         }
