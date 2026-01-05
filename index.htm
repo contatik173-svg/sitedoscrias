@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameCards BR | Gift Cards Free Fire & Roblox</title>
+    <title>Diamond Rush - Diamantes e Robux</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,63 +14,133 @@
         }
 
         :root {
-            --black-primary: #0a0a0a;
-            --black-dark: #121212;
-            --purple-primary: #8a2be2;
-            --purple-accent: #9b30ff;
-            --purple-light: #b57edc;
-            --text-light: #ffffff;
-            --text-gray: #cccccc;
-            --success: #00ff7f;
-            --danger: #ff4757;
-            --warning: #ffa502;
-            --pix-green: #00a859;
+            --primary-red: #ff0000;
+            --dark-red: #cc0000;
+            --primary-black: #0a0a0a;
+            --secondary-black: #1a1a1a;
+            --accent-black: #2a2a2a;
+            --text-white: #f0f0f0;
+            --text-gray: #aaaaaa;
+            --success: #00cc66;
+            --warning: #ff9900;
         }
 
         body {
-            background-color: var(--black-primary);
-            color: var(--text-light);
-            min-height: 100vh;
+            background-color: var(--primary-black);
+            color: var(--text-white);
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Animações de Fundo */
-        .bg-animation {
+        /* Animação de fundo */
+        .background-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -1;
             overflow: hidden;
+            pointer-events: none;
         }
 
-        .bg-particle {
+        .particle {
             position: absolute;
+            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, transparent 70%);
             border-radius: 50%;
-            background: radial-gradient(circle, var(--purple-accent) 0%, transparent 70%);
-            opacity: 0.08;
             animation: float 20s infinite linear;
         }
 
+        .diamond-particle {
+            position: absolute;
+            color: rgba(255,0,0,0.1);
+            font-size: 20px;
+            animation: floatDiamond 25s infinite linear;
+        }
+
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(20px, -40px) rotate(90deg); }
-            50% { transform: translate(0, -60px) rotate(180deg); }
-            75% { transform: translate(-20px, -40px) rotate(270deg); }
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatDiamond {
+            0% {
+                transform: translateY(100vh) translateX(100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) translateX(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
         /* Header */
-        .header {
-            background: rgba(10, 10, 10, 0.95);
-            padding: 1.2rem 3rem;
+        header {
+            background: linear-gradient(to bottom, rgba(10,10,10,0.95), rgba(10,10,10,0.85));
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--purple-primary);
+            z-index: 100;
+            border-bottom: 2px solid var(--primary-red);
             backdrop-filter: blur(10px);
         }
 
@@ -78,223 +148,523 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: var(--primary-red);
+            font-size: 2.2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .logo h1 {
             font-size: 1.8rem;
             font-weight: 800;
-        }
-
-        .logo-icon {
-            color: var(--purple-accent);
-            font-size: 2.2rem;
-        }
-
-        .logo-text {
-            background: linear-gradient(90deg, var(--purple-light), var(--purple-accent));
+            background: linear-gradient(45deg, var(--primary-red), #ff6666);
             -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             background-clip: text;
-            color: transparent;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
             gap: 2rem;
-            align-items: center;
         }
 
         .nav-links a {
-            color: var(--text-light);
+            color: var(--text-white);
             text-decoration: none;
             font-weight: 600;
             padding: 0.5rem 1rem;
-            border-radius: 8px;
+            border-radius: 5px;
             transition: all 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--purple-light);
-            background: rgba(139, 0, 255, 0.1);
-        }
-
-        .user-btn {
-            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
-            color: white;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .user-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 0, 255, 0.4);
-        }
-
-        /* Modal de Login/Cadastro */
-        .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .auth-modal.active {
-            display: flex;
-        }
-
-        .auth-content {
-            background: rgba(20, 20, 20, 0.98);
-            width: 90%;
-            max-width: 400px;
-            border-radius: 15px;
-            border: 2px solid var(--purple-primary);
-            padding: 2rem;
             position: relative;
         }
 
-        .auth-tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(139, 0, 255, 0.3);
+        .nav-links a:hover {
+            color: var(--primary-red);
+            background: rgba(255, 0, 0, 0.1);
         }
 
-        .auth-tab {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-weight: 600;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .cart-icon {
+            position: relative;
             cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
             transition: all 0.3s;
         }
 
-        .auth-tab.active {
-            color: var(--purple-light);
-            border-bottom: 3px solid var(--purple-accent);
+        .cart-icon:hover {
+            background: rgba(255, 0, 0, 0.1);
         }
 
-        .auth-form {
-            display: none;
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--primary-red);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 2px solid var(--primary-black);
         }
 
-        .auth-form.active {
-            display: block;
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Hero */
+        /* Hero Section */
         .hero {
+            padding: 5rem 5%;
             text-align: center;
-            padding: 4rem 1rem;
-            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-title {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+            z-index: -1;
+        }
+
+        .hero h2 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--purple-light), var(--purple-accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
-        .hero-subtitle {
-            font-size: 1.2rem;
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
             color: var(--text-gray);
-            max-width: 700px;
-            margin: 0 auto 3rem;
+            line-height: 1.6;
         }
 
-        /* Products */
+        .highlight {
+            color: var(--primary-red);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+            background: linear-gradient(45deg, var(--dark-red), var(--primary-red));
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 4rem 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-red), transparent);
+            border-radius: 2px;
+        }
+
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
 
         .product-card {
-            background: rgba(30, 30, 30, 0.9);
+            background: linear-gradient(145deg, var(--secondary-black), var(--accent-black));
             border-radius: 15px;
             overflow: hidden;
-            border: 1px solid rgba(139, 0, 255, 0.2);
-            transition: all 0.3s;
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+            transform-origin: left;
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
         }
 
         .product-card:hover {
             transform: translateY(-10px);
-            border-color: var(--purple-accent);
-            box-shadow: 0 15px 30px rgba(139, 0, 255, 0.2);
+            border-color: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.2);
         }
 
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid rgba(139, 0, 255, 0.3);
+        .product-header {
+            background: rgba(255, 0, 0, 0.05);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
         }
 
-        .product-info {
-            padding: 1.5rem;
+        .product-icon {
+            font-size: 3.5rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
         }
 
         .product-title {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
         .product-game {
             display: inline-block;
-            background: rgba(139, 0, 255, 0.2);
-            color: var(--purple-light);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+            background: rgba(255, 0, 0, 0.2);
+            color: var(--text-white);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .product-body {
+            padding: 2rem;
         }
 
         .product-price {
-            font-size: 2rem;
-            color: var(--purple-accent);
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-red);
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .buy-btn {
-            width: 100%;
-            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+        .product-price span {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .product-description {
+            color: var(--text-gray);
+            margin-bottom: 1.8rem;
+            line-height: 1.6;
+            min-height: 72px;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
             color: white;
             border: none;
             padding: 1rem;
+            width: 100%;
             border-radius: 8px;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
         }
 
-        .buy-btn:hover {
-            background: linear-gradient(45deg, var(--purple-accent), var(--purple-light));
+        .buy-button:hover {
+            background: linear-gradient(45deg, var(--dark-red), #ff3333);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 0, 0, 0.3);
         }
 
-        /* Modal de Pagamento PIX */
-        .payment-modal {
+        /* Pix Section */
+        .pix-section {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(10,10,10,0.95));
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pix-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,0,0,0.03)"/><path d="M0,0 L0,100 L100,100 Z" fill="rgba(255,0,0,0.03)"/></svg>');
+            background-size: 200px;
+            opacity: 0.3;
+        }
+
+        .pix-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(10, 10, 10, 0.7);
+            padding: 3rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 0, 0, 0.2);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .pix-title {
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .pix-info {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-red);
+        }
+
+        .pix-key-container {
+            background: rgba(255, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 2px dashed rgba(255, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .pix-key-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .pix-key {
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            font-size: 1.1rem;
+            color: var(--text-white);
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .pix-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .copy-btn {
+            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+            justify-content: center;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(45deg, var(--dark-red), #ff3333);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .instructions {
+            margin-top: 2.5rem;
+        }
+
+        .instructions h4 {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #000000, var(--primary-black));
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 2px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer-logo i {
+            animation: pulse 2s infinite;
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--primary-red);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -302,130 +672,253 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
-            display: none;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
 
-        .payment-modal.active {
+        .modal.active {
             display: flex;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        .payment-content {
-            background: rgba(20, 20, 20, 0.95);
-            width: 90%;
-            max-width: 500px;
+        .modal-content {
+            background: linear-gradient(145deg, var(--secondary-black), var(--primary-black));
+            padding: 2.5rem;
             border-radius: 15px;
-            border: 2px solid var(--purple-primary);
-            padding: 2rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 20px 50px rgba(255, 0, 0, 0.2);
             position: relative;
         }
 
-        .close-payment {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .modal-title {
+            color: var(--primary-red);
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
             background: none;
             border: none;
-            color: var(--text-light);
-            font-size: 1.5rem;
+            color: var(--text-white);
+            font-size: 2rem;
             cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
 
-        .pix-title {
-            text-align: center;
-            color: var(--pix-green);
+        .close-modal:hover {
+            color: var(--primary-red);
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        /* Cart Modal Specific */
+        .cart-items {
             margin-bottom: 2rem;
-            font-size: 1.8rem;
         }
 
-        .pix-qrcode {
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .cart-item-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+
+        .cart-item-details {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 0, 0, 0.2);
+            color: var(--text-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary-red);
+        }
+
+        .quantity {
+            min-width: 30px;
             text-align: center;
-            margin: 2rem 0;
-            padding: 1rem;
-            background: white;
-            border-radius: 10px;
-            max-width: 300px;
-            margin-left: auto;
-            margin-right: auto;
+            font-weight: bold;
         }
 
-        .pix-key {
-            background: rgba(0, 168, 89, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-            word-break: break-all;
-            font-family: monospace;
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff6666;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            padding: 0.5rem;
+            border-radius: 5px;
         }
 
-        .payment-info {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: rgba(139, 0, 255, 0.1);
-            border-radius: 8px;
+        .remove-item:hover {
+            color: var(--primary-red);
+            background: rgba(255, 0, 0, 0.1);
         }
 
-        /* Modal Admin */
-        .admin-modal {
+        .cart-total {
+            text-align: right;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .cart-total h3 {
+            color: var(--primary-red);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .checkout-button {
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-gray);
+        }
+
+        .empty-cart i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 0, 0, 0.2);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .admin-modal.active {
-            display: flex;
-        }
-
-        .admin-content {
-            background: rgba(20, 20, 20, 0.98);
-            width: 90%;
-            max-width: 1000px;
-            border-radius: 15px;
-            border: 2px solid var(--purple-primary);
-            max-height: 90vh;
+            z-index: 3000;
             overflow-y: auto;
         }
 
+        .admin-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
         .admin-header {
-            background: linear-gradient(90deg, var(--purple-primary), var(--purple-accent));
+            background: linear-gradient(90deg, var(--primary-black), var(--secondary-black));
             padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
         .admin-title {
             font-size: 1.8rem;
-            font-weight: 700;
+            color: var(--primary-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .admin-tabs {
             display: flex;
-            background: rgba(30, 30, 30, 0.9);
-            border-bottom: 2px solid var(--purple-primary);
+            background: rgba(26, 26, 26, 0.95);
+            border-bottom: 2px solid var(--primary-red);
+            position: sticky;
+            top: 71px;
+            z-index: 1;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 1rem;
+            padding: 1.2rem;
             background: none;
             border: none;
-            color: var(--text-light);
+            color: var(--text-gray);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            border-right: 1px solid rgba(255, 0, 0, 0.1);
+        }
+
+        .tab-btn:last-child {
+            border-right: none;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 0, 0, 0.1);
+            color: var(--text-white);
         }
 
         .tab-btn.active {
-            background: var(--purple-primary);
+            background: var(--primary-red);
             color: white;
         }
 
@@ -436,646 +929,879 @@
 
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.5s ease-out;
         }
 
+        /* Form Styles */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.7rem;
+            color: var(--text-white);
             font-weight: 600;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.8rem;
-            background: rgba(40, 40, 40, 0.9);
-            border: 1px solid rgba(139, 0, 255, 0.5);
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
             border-radius: 8px;
-            color: var(--text-light);
-        }
-
-        /* Upload de Imagem */
-        .image-upload-container {
-            margin-top: 1rem;
-            padding: 1.5rem;
-            background: rgba(30, 30, 30, 0.7);
-            border-radius: 10px;
-            border: 2px dashed rgba(139, 0, 255, 0.3);
-        }
-
-        .upload-area {
-            text-align: center;
-            padding: 2rem;
-            cursor: pointer;
+            color: var(--text-white);
+            font-size: 1rem;
             transition: all 0.3s;
         }
 
-        .upload-area:hover {
-            background: rgba(139, 0, 255, 0.1);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
         }
 
-        .upload-icon {
-            font-size: 3rem;
-            color: var(--purple-accent);
-            margin-bottom: 1rem;
-        }
-
-        .upload-text {
-            color: var(--text-gray);
-            margin-bottom: 1rem;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .image-preview {
-            max-width: 200px;
-            max-height: 150px;
-            margin-top: 1rem;
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
             border-radius: 8px;
-            display: none;
+            color: var(--text-white);
+            font-size: 1rem;
+            cursor: pointer;
         }
 
-        .image-preview.active {
-            display: block;
+        .form-select option {
+            background: var(--secondary-black);
+            color: var(--text-white);
         }
 
-        .upload-options {
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-actions {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             justify-content: center;
         }
 
-        .upload-btn {
-            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-red), var(--dark-red));
             color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
         }
 
-        .upload-btn:hover {
+        .btn-primary:hover {
+            background: linear-gradient(45deg, var(--dark-red), #ff3333);
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
         }
 
-        .btn-save {
-            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: var(--primary-red);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff3333, #cc0000);
             color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 1rem;
         }
 
-        /* Tabela de Clientes */
-        .customers-table {
+        .btn-danger:hover {
+            background: linear-gradient(45deg, #cc0000, #ff3333);
+        }
+
+        /* Tables */
+        .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
-            background: rgba(30, 30, 30, 0.9);
-            border-radius: 8px;
+            margin-top: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
             overflow: hidden;
         }
 
-        .customers-table th,
-        .customers-table td {
-            padding: 1rem;
+        .data-table th {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 1.2rem;
             text-align: left;
-            border-bottom: 1px solid rgba(139, 0, 255, 0.2);
-        }
-
-        .customers-table th {
-            background: rgba(139, 0, 255, 0.2);
+            color: var(--text-white);
             font-weight: 600;
+            border-bottom: 2px solid var(--primary-red);
         }
 
-        .status-paid {
-            color: var(--success);
+        .data-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.1);
+            color: var(--text-gray);
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
         .status-pending {
-            color: var(--warning);
-            font-weight: 600;
+            background: rgba(255, 153, 0, 0.2);
+            color: #ff9900;
         }
 
-        /* Footer */
-        .footer {
-            background: rgba(10, 10, 10, 0.95);
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 5rem;
-            border-top: 2px solid var(--purple-primary);
+        .status-paid {
+            background: rgba(0, 204, 102, 0.2);
+            color: var(--success);
         }
 
-        .footer-logo {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .status-cancelled {
+            background: rgba(255, 0, 0, 0.2);
+            color: var(--primary-red);
         }
 
-        /* Notificação Online */
-        .online-status {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--success);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 5px;
-            z-index: 1000;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            justify-content: center;
         }
 
-        .online-status.offline {
-            background: var(--danger);
+        .edit-btn {
+            background: rgba(0, 204, 102, 0.1);
+            color: var(--success);
         }
 
-        .online-status .pulse {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+        .edit-btn:hover {
+            background: var(--success);
+            color: white;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.7; }
+        .delete-btn {
+            background: rgba(255, 0, 0, 0.1);
+            color: var(--primary-red);
         }
 
-        /* Responsividade */
+        .delete-btn:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        /* Products List */
+        .products-list {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .product-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-item-info h4 {
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-item-details {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .product-item-price {
+            color: var(--primary-red);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .login-content {
+            background: linear-gradient(145deg, var(--secondary-black), var(--primary-black));
+            padding: 3rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid var(--primary-red);
+            text-align: center;
+        }
+
+        .login-title {
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .login-error {
+            color: var(--primary-red);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header {
+            header {
                 flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
+                gap: 1.5rem;
+                padding: 1rem 5%;
             }
             
             .nav-links {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 1rem;
             }
             
-            .hero-title {
+            .hero h2 {
                 font-size: 2.5rem;
             }
             
-            .products-grid {
-                grid-template-columns: 1fr;
+            .section-title {
+                font-size: 2rem;
             }
             
-            .admin-content {
-                width: 95%;
-                margin: 1rem;
-            }
-            
-            .customers-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .upload-options {
+            .pix-buttons {
                 flex-direction: column;
             }
             
-            .online-status {
-                bottom: 10px;
-                right: 10px;
-                font-size: 0.7rem;
+            .copy-btn {
+                min-width: 100%;
+            }
+            
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                flex: 1 0 calc(50% - 2px);
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .product-price {
+                font-size: 1.8rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .cart-item-actions {
+                width: 100%;
+                justify-content: space-between;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Animações de Fundo -->
-    <div class="bg-animation" id="bgAnimation"></div>
-
-    <!-- Status Online -->
-    <div class="online-status" id="onlineStatus">
-        <div class="pulse"></div>
-        <span>Sistema Online</span>
-    </div>
+    <!-- Animação de Fundo -->
+    <div class="background-animation" id="backgroundAnimation"></div>
 
     <!-- Header -->
-    <header class="header">
+    <header>
         <div class="logo">
-            <i class="fas fa-gamepad logo-icon"></i>
-            <span class="logo-text">GameCards BR</span>
+            <i class="fas fa-gem"></i>
+            <h1>Diamond Rush</h1>
         </div>
         
         <nav>
             <ul class="nav-links">
                 <li><a href="#home">Início</a></li>
                 <li><a href="#products">Produtos</a></li>
-                <li><a href="#support">Suporte</a></li>
-                <li>
-                    <button class="user-btn" id="userBtn">
-                        <i class="fas fa-user"></i> Entrar
-                    </button>
-                </li>
+                <li><a href="#pix">Como Comprar</a></li>
+                <li><a href="#contact">Suporte</a></li>
             </ul>
         </nav>
+        
+        <div class="cart-icon" id="cartIcon">
+            <i class="fas fa-shopping-cart fa-lg"></i>
+            <div class="cart-count" id="cartCount">0</div>
+        </div>
     </header>
 
-    <!-- Modal de Login/Cadastro -->
-    <div class="auth-modal" id="authModal">
-        <div class="auth-content">
-            <button class="close-payment" id="closeAuthBtn">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="auth-tabs">
-                <button class="auth-tab active" data-form="login">Entrar</button>
-                <button class="auth-tab" data-form="register">Cadastrar</button>
-            </div>
-            
-            <!-- Formulário de Login -->
-            <form class="auth-form active" id="loginForm">
-                <div class="form-group">
-                    <label class="form-label">E-mail:</label>
-                    <input type="email" class="form-input" id="loginEmail" placeholder="seu@email.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Senha:</label>
-                    <input type="password" class="form-input" id="loginPassword" placeholder="Sua senha" required>
-                </div>
-                
-                <button type="submit" class="btn-save" style="width: 100%;">
-                    <i class="fas fa-sign-in-alt"></i> Entrar
-                </button>
-            </form>
-            
-            <!-- Formulário de Cadastro -->
-            <form class="auth-form" id="registerForm">
-                <div class="form-group">
-                    <label class="form-label">Nome Completo:</label>
-                    <input type="text" class="form-input" id="registerName" placeholder="Seu nome" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">E-mail:</label>
-                    <input type="email" class="form-input" id="registerEmail" placeholder="seu@email.com" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Senha:</label>
-                    <input type="password" class="form-input" id="registerPassword" placeholder="Mínimo 6 caracteres" minlength="6" required>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Confirmar Senha:</label>
-                    <input type="password" class="form-input" id="registerConfirm" placeholder="Digite a senha novamente" required>
-                </div>
-                
-                <button type="submit" class="btn-save" style="width: 100%;">
-                    <i class="fas fa-user-plus"></i> Criar Conta
-                </button>
-            </form>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h2>Diamantes e Robux com os <span class="highlight">Menores Preços</span></h2>
+        <p>Compre <span class="highlight">diamantes para Free Fire</span> e <span class="highlight">Robux para Roblox</span> com segurança e rapidez. Entrega instantânea após confirmação do PIX!</p>
+        <a href="#products" class="cta-button">
+            <i class="fas fa-bolt"></i> Ver Produtos
+        </a>
+    </section>
+
+    <!-- Produtos -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">Nossos Produtos</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Produtos serão carregados via JavaScript -->
         </div>
-    </div>
+    </section>
 
-    <!-- Conteúdo Principal (Só aparece se estiver logado) -->
-    <main class="container" id="mainContent" style="display: none;">
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <h1 class="hero-title">Gift Cards Free Fire & Roblox</h1>
-            <p class="hero-subtitle">Compre com segurança via PIX e receba instantaneamente. Melhores preços do mercado!</p>
-        </section>
-
-        <!-- Produtos -->
-        <section id="products">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--purple-light);">
-                Nossos Gift Cards
-            </h2>
-            <div class="products-grid" id="productsGrid">
-                <!-- Produtos carregados via JavaScript -->
-            </div>
-        </section>
-
-        <!-- Como Funciona -->
-        <section style="margin-top: 5rem; background: rgba(30, 30, 30, 0.7); padding: 3rem; border-radius: 15px;">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--purple-light);">
-                Como Comprar
-            </h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; color: var(--purple-accent); margin-bottom: 1rem;">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">1. Escolha o Gift Card</h3>
-                    <p style="color: var(--text-gray);">Selecione o valor desejado</p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; color: var(--pix-green); margin-bottom: 1rem;">
-                        <i class="fas fa-qrcode"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">2. Pague via PIX</h3>
-                    <p style="color: var(--text-gray);">Escaneie o QR Code ou copie a chave</p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <div style="font-size: 3rem; color: var(--purple-accent); margin-bottom: 1rem;">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 style="margin-bottom: 1rem;">3. Receba Instantâneo</h3>
-                    <p style="color: var(--text-gray);">Código chega em segundos no seu e-mail</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Mensagem para não logados -->
-    <div class="container" id="loginMessage" style="text-align: center; padding: 5rem 2rem;">
-        <div style="font-size: 5rem; color: var(--purple-accent); margin-bottom: 2rem;">
-            <i class="fas fa-gamepad"></i>
-        </div>
-        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--purple-light);">
-            Bem-vindo à GameCards BR!
-        </h2>
-        <p style="font-size: 1.2rem; color: var(--text-gray); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Faça login ou crie uma conta para acessar nossa loja de gift cards e fazer suas compras com segurança.
-        </p>
-        <button class="user-btn" style="font-size: 1.2rem; padding: 1rem 2.5rem;" id="loginPromptBtn">
-            <i class="fas fa-sign-in-alt"></i> Entrar ou Cadastrar
-        </button>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer" id="support">
-        <div class="footer-logo">
-            <i class="fas fa-gamepad"></i>
-            <span style="color: var(--purple-accent);">GameCards</span> BR
-        </div>
-        <p style="color: var(--text-gray); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Sua loja confiável de gift cards para Free Fire e Roblox. Atendimento 24/7.
-        </p>
-        <p style="color: #888; font-size: 0.9rem;">
-            &copy; <span id="currentYear"></span> GameCards BR. Todos os direitos reservados.
-        </p>
-    </footer>
-
-    <!-- Modal de Pagamento PIX -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <button class="close-payment" id="closePaymentBtn">
-                <i class="fas fa-times"></i>
-            </button>
-            
+    <!-- Seção PIX -->
+    <section class="pix-section" id="pix">
+        <div class="pix-container">
             <h2 class="pix-title">
                 <i class="fas fa-qrcode"></i> Pagamento via PIX
             </h2>
             
-            <div class="payment-info">
-                <h3 id="paymentProductName"></h3>
-                <p style="margin-top: 0.5rem;">Valor: <strong id="paymentAmount" style="color: var(--purple-accent); font-size: 1.5rem;"></strong></p>
-            </div>
-            
-            <div class="pix-qrcode" id="pixQrCode">
-                <div style="color: black; padding: 1rem; font-weight: bold;">
-                    QR CODE PIX<br>
-                    (Sistema em Funcionamento)
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Chave PIX para Copiar:</label>
-                <div class="pix-key" id="pixKeyDisplay">
-                    Carregando...
-                </div>
-                <button class="btn-save" onclick="copyPixKey()" style="width: 100%;">
-                    <i class="fas fa-copy"></i> Copiar Chave PIX
-                </button>
-            </div>
-            
-            <div class="form-group">
-                <h3 style="margin-bottom: 1rem;">Confirmar Pedido</h3>
-                <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
-                    Cliente: <strong id="customerInfo"></strong><br>
-                    E-mail: <strong id="customerEmailInfo"></strong>
-                </p>
+            <div class="pix-info">
+                <p>Para finalizar sua compra, faça o pagamento via PIX para a chave abaixo. Após a confirmação, seu produto será enviado em até 5 minutos diretamente para seu email ou WhatsApp.</p>
                 
+                <div class="pix-key-container">
+                    <span class="pix-key-label">Chave PIX Aleatória (Copiar e Colar):</span>
+                    <div class="pix-key" id="pixKeyDisplay">c5a32214-21da-4065-bce8-b6c719fb46f4</div>
+                </div>
+                
+                <div class="pix-buttons">
+                    <button class="copy-btn" id="copyPixBtn">
+                        <i class="fas fa-copy"></i> Copiar Chave PIX
+                    </button>
+                </div>
+                
+                <div class="instructions">
+                    <h4>Como funciona:</h4>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h5>Escolha o Produto</h5>
+                            <p>Selecione o pacote de diamantes ou Robux que deseja comprar.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h5>Faça o PIX</h5>
+                            <p>Copie a chave PIX e faça o pagamento em seu banco.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h5>Envie o Comprovante</h5>
+                            <p>Envie o comprovante para nosso WhatsApp: (11) 99999-9999</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <h5>Receba Instantâneo</h5>
+                            <p>Receba seu código em até 5 minutos após confirmação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-gem"></i>
+                <span>Diamond Rush</span>
+            </div>
+            
+            <p class="footer-text">
+                Sua loja confiável de diamantes e Robux. Pagamento seguro via PIX, entrega rápida e suporte 24/7.
+            </p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="#" class="social-link">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+            
+            <div class="copyright">
+                © 2023 Diamond Rush. Todos os direitos reservados.<br>
+                Não somos afiliados à Garena ou Roblox Corporation.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal do Carrinho -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-shopping-cart"></i> Seu Carrinho
+                </h3>
+                <button class="close-modal" id="closeCartBtn">&times;</button>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h4>Seu carrinho está vazio</h4>
+                    <p>Adicione produtos para continuar</p>
+                </div>
+            </div>
+            
+            <div class="cart-total" id="cartTotal" style="display: none;">
+                <h3>Total do Pedido:</h3>
+                <div class="total-amount" id="totalAmount">R$ 0,00</div>
+            </div>
+            
+            <button class="buy-button checkout-button" id="checkoutBtn" style="display: none;">
+                <i class="fas fa-lock"></i> Finalizar Compra com PIX
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-qrcode"></i> Finalizar Compra
+                </h3>
+                <button class="close-modal" id="closeCheckoutBtn">&times;</button>
+            </div>
+            
+            <div id="checkoutContent">
+                <div class="pix-info">
+                    <h4 style="color: var(--primary-red); margin-bottom: 1rem;">Instruções para Pagamento</h4>
+                    <p>Para finalizar sua compra, faça o PIX para a chave abaixo e envie o comprovante para nosso WhatsApp.</p>
+                    
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label class="form-label">Seu Email (para envio do código):</label>
+                        <input type="email" class="form-input" id="customerEmail" placeholder="seu@email.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Seu ID no Jogo:</label>
+                        <input type="text" class="form-input" id="customerGameId" placeholder="Ex: 123456789" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome para Contato:</label>
+                        <input type="text" class="form-input" id="customerName" placeholder="Seu nome completo" required>
+                    </div>
+                    
+                    <div class="pix-key-container" style="margin-top: 2rem;">
+                        <span class="pix-key-label">Chave PIX para Pagamento:</span>
+                        <div class="pix-key" id="checkoutPixKey">c5a32214-21da-4065-bce8-b6c719fb46f4</div>
+                    </div>
+                    
+                    <div class="pix-buttons">
+                        <button class="copy-btn" id="copyCheckoutPixBtn">
+                            <i class="fas fa-copy"></i> Copiar Chave PIX
+                        </button>
+                        <button class="btn-secondary" onclick="window.open('https://wa.me/5511999999999', '_blank')">
+                            <i class="fab fa-whatsapp"></i> Enviar Comprovante
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 204, 102, 0.1); border-radius: 8px; border-left: 4px solid var(--success);">
+                        <h4 style="color: var(--success); margin-bottom: 0.5rem;">
+                            <i class="fas fa-check-circle"></i> Pedido Registrado
+                        </h4>
+                        <p id="orderSummary">Seu pedido será processado após confirmação do pagamento.</p>
+                    </div>
+                    
+                    <button class="buy-button checkout-button" id="confirmOrderBtn" style="margin-top: 1.5rem;">
+                        <i class="fas fa-check-circle"></i> Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Login Admin -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2 class="login-title">
+                <i class="fas fa-user-shield"></i> Painel Administrativo
+            </h2>
+            
+            <div class="login-form">
                 <div class="form-group">
-                    <label class="form-label">Seu ID no Jogo:</label>
-                    <input type="text" class="form-input" id="customerGameId" placeholder="Ex: 123456789" required>
+                    <label class="form-label">Senha de Administrador:</label>
+                    <input type="password" class="form-input" id="adminPassword" placeholder="Digite a senha" autocomplete="off">
                 </div>
                 
-                <button class="btn-save" onclick="confirmOrder()" style="width: 100%;">
-                    <i class="fas fa-check-circle"></i> Confirmar Pedido
+                <button class="btn-primary" id="loginAdminBtn" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Acessar Painel
                 </button>
+                
+                <div class="login-error" id="loginError">
+                    <i class="fas fa-exclamation-circle"></i> Senha incorreta!
+                </div>
             </div>
             
-            <p style="color: var(--text-gray); text-align: center; margin-top: 1rem; font-size: 0.9rem;">
-                Após o pagamento, o código será enviado para seu e-mail em até 5 minutos.
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-top: 1rem;">
+                Para abrir este painel, pressione a tecla <strong>=</strong>
             </p>
         </div>
     </div>
 
-    <!-- Modal do Painel Administrativo -->
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-content">
-            <div class="admin-header">
-                <h2 class="admin-title">
-                    <i class="fas fa-user-shield"></i> Painel Administrativo
-                </h2>
-                <button class="user-btn" id="closeAdminBtn">
-                    <i class="fas fa-times"></i> Fechar
-                </button>
-            </div>
+    <!-- Painel Administrativo -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 class="admin-title">
+                <i class="fas fa-user-shield"></i> Painel Administrativo - Diamond Rush
+            </h2>
+            <button class="btn-danger" id="logoutAdminBtn">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab-btn" data-tab="products">
+                <i class="fas fa-box"></i> Produtos
+            </button>
+            <button class="tab-btn" data-tab="customers">
+                <i class="fas fa-users"></i> Clientes
+            </button>
+            <button class="tab-btn" data-tab="orders">
+                <i class="fas fa-shopping-cart"></i> Pedidos
+            </button>
+            <button class="tab-btn" data-tab="pix">
+                <i class="fas fa-qrcode"></i> Configurar PIX
+            </button>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboardTab">
+            <h3 style="color: var(--primary-red); margin-bottom: 2rem;">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </h3>
             
-            <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="login">Acesso</button>
-                <button class="tab-btn" data-tab="products">Produtos</button>
-                <button class="tab-btn" data-tab="customers">Clientes</button>
-                <button class="tab-btn" data-tab="pix">Configurar PIX</button>
-            </div>
-            
-            <!-- Tab: Login -->
-            <div class="tab-content active" id="loginTab">
-                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Acesso Administrativo</h3>
-                
-                <div class="form-group">
-                    <label class="form-label">Senha de Administrador:</label>
-                    <input type="password" class="form-input" id="adminPassword" placeholder="Digite a senha">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div style="background: rgba(255, 0, 0, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(255, 0, 0, 0.2);">
+                    <h4 style="color: var(--text-gray); margin-bottom: 0.5rem;">Total de Pedidos</h4>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary-red);" id="totalOrders">0</div>
                 </div>
                 
-                <button class="btn-save" id="loginAdminBtn">
-                    <i class="fas fa-sign-in-alt"></i> Acessar Painel
-                </button>
+                <div style="background: rgba(0, 204, 102, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(0, 204, 102, 0.2);">
+                    <h4 style="color: var(--text-gray); margin-bottom: 0.5rem;">Total Arrecadado</h4>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--success);" id="totalRevenue">R$ 0,00</div>
+                </div>
+                
+                <div style="background: rgba(255, 153, 0, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(255, 153, 0, 0.2);">
+                    <h4 style="color: var(--text-gray); margin-bottom: 0.5rem;">Clientes Cadastrados</h4>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: var(--warning);" id="totalCustomers">0</div>
+                </div>
+                
+                <div style="background: rgba(139, 0, 255, 0.1); padding: 1.5rem; border-radius: 10px; border: 1px solid rgba(139, 0, 255, 0.2);">
+                    <h4 style="color: var(--text-gray); margin-bottom: 0.5rem;">Produtos Ativos</h4>
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #8b00ff;" id="totalProducts">0</div>
+                </div>
             </div>
             
-            <!-- Tab: Produtos -->
-            <div class="tab-content" id="productsTab">
-                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Gerenciar Produtos</h3>
-                
-                <div class="form-group">
-                    <h4 style="margin-bottom: 1rem;">Adicionar Novo Produto</h4>
-                    <form id="addProductForm">
+            <h4 style="color: var(--text-white); margin-bottom: 1rem; margin-top: 2rem;">Pedidos Recentes</h4>
+            <div id="recentOrders">
+                <p style="color: var(--text-gray); text-align: center; padding: 2rem;">
+                    Nenhum pedido registrado ainda.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Produtos Tab -->
+        <div class="tab-content" id="productsTab">
+            <h3 style="color: var(--primary-red); margin-bottom: 2rem;">
+                <i class="fas fa-box"></i> Gerenciar Produtos
+            </h3>
+            
+            <div class="form-group">
+                <h4 style="color: var(--text-white); margin-bottom: 1.5rem;">Adicionar Novo Produto</h4>
+                <form id="addProductForm">
+                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Nome do Produto:</label>
-                            <input type="text" class="form-input" id="productName" placeholder="Ex: Gift Card Free Fire 1000 Diamantes" required>
+                            <input type="text" class="form-input" id="productName" placeholder="Ex: 1000 Diamantes Free Fire" required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Jogo:</label>
-                            <select class="form-input" id="productGame" required>
-                                <option value="">Selecione</option>
+                            <label class="form-label">Tipo:</label>
+                            <select class="form-select" id="productType" required>
+                                <option value="">Selecione...</option>
                                 <option value="Free Fire">Free Fire</option>
                                 <option value="Roblox">Roblox</option>
+                                <option value="Outro">Outro</option>
                             </select>
                         </div>
-                        
+                    </div>
+                    
+                    <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Preço (R$):</label>
-                            <input type="number" class="form-input" id="productPrice" step="0.01" min="1" required>
+                            <input type="number" class="form-input" id="productPrice" step="0.01" min="1" placeholder="Ex: 9.90" required>
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Imagem do Produto:</label>
-                            <div class="image-upload-container">
-                                <!-- Área de Upload -->
-                                <div class="upload-area" id="uploadArea">
-                                    <div class="upload-icon">
-                                        <i class="fas fa-cloud-upload-alt"></i>
-                                    </div>
-                                    <div class="upload-text">
-                                        Arraste e solte uma imagem aqui<br>
-                                        ou clique para selecionar
-                                    </div>
-                                    <input type="file" class="file-input" id="imageInput" accept="image/*">
-                                    <button type="button" class="upload-btn" onclick="document.getElementById('imageInput').click()">
-                                        <i class="fas fa-folder-open"></i> Escolher Arquivo
-                                    </button>
-                                </div>
-                                
-                                <!-- Pré-visualização -->
-                                <div style="text-align: center; margin-top: 1rem;">
-                                    <img id="imagePreview" class="image-preview" src="" alt="Pré-visualização">
-                                </div>
-                                
-                                <!-- Opções -->
-                                <div class="upload-options">
-                                    <button type="button" class="upload-btn" onclick="useUploadedImage()" id="useImageBtn" style="display: none;">
-                                        <i class="fas fa-check"></i> Usar Esta Imagem
-                                    </button>
-                                    <button type="button" class="upload-btn" onclick="clearImage()" id="clearImageBtn" style="display: none; background: var(--danger);">
-                                        <i class="fas fa-times"></i> Remover Imagem
-                                    </button>
-                                </div>
-                                
-                                <!-- Ou use URL -->
-                                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 0, 255, 0.3);">
-                                    <div class="form-group">
-                                        <label class="form-label" style="margin-bottom: 0.5rem;">OU Cole URL da Imagem:</label>
-                                        <input type="url" class="form-input" id="productImage" placeholder="https://exemplo.com/imagem.jpg">
-                                        <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
-                                            Exemplos:<br>
-                                            Free Fire: https://i.imgur.com/4Qp6Q8s.png<br>
-                                            Roblox: https://i.imgur.com/Vv7Q2ZL.png
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
+                            <label class="form-label">Preço Original (R$):</label>
+                            <input type="number" class="form-input" id="productOriginalPrice" step="0.01" min="1" placeholder="Ex: 19.90">
                         </div>
-                        
-                        <button type="submit" class="btn-save">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descrição:</label>
+                        <textarea class="form-input" id="productDescription" rows="3" placeholder="Descreva o produto..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Ícone (Classe FontAwesome):</label>
+                        <input type="text" class="form-input" id="productIcon" placeholder="Ex: fas fa-gem" value="fas fa-gem">
+                        <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
+                            Use classes do FontAwesome. Ex: fas fa-gem, fas fa-coins, fas fa-fire, etc.
+                        </small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
                             <i class="fas fa-plus"></i> Adicionar Produto
                         </button>
-                    </form>
-                </div>
-                
-                <div class="form-group">
-                    <h4 style="margin-bottom: 1rem;">Produtos Cadastrados</h4>
-                    <div id="adminProductsList" style="background: rgba(30, 30, 30, 0.9); padding: 1rem; border-radius: 8px; max-height: 300px; overflow-y: auto;"></div>
-                </div>
-            </div>
-            
-            <!-- Tab: Clientes -->
-            <div class="tab-content" id="customersTab">
-                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Clientes e Pedidos</h3>
-                
-                <div id="customersList">
-                    <table class="customers-table">
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Cliente</th>
-                                <th>E-mail</th>
-                                <th>Produto</th>
-                                <th>Valor</th>
-                                <th>Status</th>
-                                <th>ID do Jogo</th>
-                            </tr>
-                        </thead>
-                        <tbody id="customersTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Tab: Configurar PIX -->
-            <div class="tab-content" id="pixTab">
-                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Configuração da Chave PIX</h3>
-                
-                <div class="form-group">
-                    <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
-                        Configure sua chave PIX para receber os pagamentos dos clientes.
-                    </p>
-                    
-                    <form id="pixConfigForm">
-                        <div class="form-group">
-                            <label class="form-label">Tipo de Chave PIX:</label>
-                            <select class="form-input" id="pixType" required>
-                                <option value="cpf">CPF</option>
-                                <option value="cnpj">CNPJ</option>
-                                <option value="email">E-mail</option>
-                                <option value="phone">Telefone</option>
-                                <option value="random">Chave Aleatória</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Sua Chave PIX:</label>
-                            <input type="text" class="form-input" id="pixKey" placeholder="Digite sua chave PIX" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Nome do Titular:</label>
-                            <input type="text" class="form-input" id="pixName" placeholder="Nome registrado no PIX" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Cidade:</label>
-                            <input type="text" class="form-input" id="pixCity" placeholder="Cidade do titular" required>
-                        </div>
-                        
-                        <button type="submit" class="btn-save">
-                            <i class="fas fa-save"></i> Salvar Configurações PIX
+                        <button type="reset" class="btn-secondary">
+                            <i class="fas fa-redo"></i> Limpar
                         </button>
-                    </form>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="form-group" style="margin-top: 3rem;">
+                <h4 style="color: var(--text-white); margin-bottom: 1.5rem;">Produtos Cadastrados</h4>
+                <div class="products-list" id="adminProductsList">
+                    <!-- Produtos serão carregados aqui -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Clientes Tab -->
+        <div class="tab-content" id="customersTab">
+            <h3 style="color: var(--primary-red); margin-bottom: 2rem;">
+                <i class="fas fa-users"></i> Gerenciar Clientes
+            </h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>ID do Jogo</th>
+                            <th>Telefone</th>
+                            <th>Total Gasto</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTable">
+                        <!-- Clientes serão carregados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Pedidos Tab -->
+        <div class="tab-content" id="ordersTab">
+            <h3 style="color: var(--primary-red); margin-bottom: 2rem;">
+                <i class="fas fa-shopping-cart"></i> Gerenciar Pedidos
+            </h3>
+            
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Produto</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable">
+                        <!-- Pedidos serão carregados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Configurar PIX Tab -->
+        <div class="tab-content" id="pixTab">
+            <h3 style="color: var(--primary-red); margin-bottom: 2rem;">
+                <i class="fas fa-qrcode"></i> Configurar Chave PIX
+            </h3>
+            
+            <div class="form-group">
+                <div style="background: rgba(0, 204, 102, 0.1); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; border-left: 4px solid var(--success);">
+                    <h4 style="color: var(--success); margin-bottom: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> Informações Importantes
+                    </h4>
+                    <p style="color: var(--text-gray);">
+                        Configure sua chave PIX para receber os pagamentos dos clientes. A chave será exibida na página de pagamento.
+                    </p>
+                </div>
+                
+                <form id="pixConfigForm">
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Chave PIX:</label>
+                        <select class="form-select" id="pixKeyType" required>
+                            <option value="random">Chave Aleatória</option>
+                            <option value="cpf">CPF</option>
+                            <option value="cnpj">CNPJ</option>
+                            <option value="email">E-mail</option>
+                            <option value="phone">Telefone</option>
+                        </select>
+                    </div>
                     
-                    <div id="currentPixConfig" style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 168, 89, 0.1); border-radius: 8px; display: none;">
-                        <h4 style="color: var(--pix-green); margin-bottom: 1rem;">
-                            <i class="fas fa-check-circle"></i> Chave PIX Configurada
-                        </h4>
-                        <p><strong>Chave:</strong> <span id="currentPixKey"></span></p>
-                        <p><strong>Titular:</strong> <span id="currentPixName"></span></p>
-                        <p><strong>Cidade:</strong> <span id="currentPixCity"></span></p>
+                    <div class="form-group">
+                        <label class="form-label">Sua Chave PIX:</label>
+                        <input type="text" class="form-input" id="pixKeyValue" 
+                               placeholder="Digite sua chave PIX" 
+                               value="c5a32214-21da-4065-bce8-b6c719fb46f4" required>
+                        <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
+                            Esta é a chave que os clientes usarão para pagar.
+                        </small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Nome do Titular:</label>
+                        <input type="text" class="form-input" id="pixKeyName" placeholder="Nome registrado no PIX" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Cidade:</label>
+                        <input type="text" class="form-input" id="pixKeyCity" placeholder="Cidade do titular" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Salvar Configurações
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="generateRandomPixKey()">
+                            <i class="fas fa-random"></i> Gerar Chave Aleatória
+                        </button>
+                    </div>
+                </form>
+                
+                <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(255, 0, 0, 0.05); border-radius: 10px; border: 1px solid rgba(255, 0, 0, 0.2);">
+                    <h4 style="color: var(--text-white); margin-bottom: 1rem;">Pré-visualização da Chave PIX</h4>
+                    <div style="font-family: monospace; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 5px; word-break: break-all; color: var(--text-gray);" id="pixPreview">
+                        c5a32214-21da-4065-bce8-b6c719fb46f4
                     </div>
                 </div>
             </div>
@@ -1083,777 +1809,1204 @@
     </div>
 
     <script>
-        // =================== SISTEMA COMPLETO ===================
-        
-        // Configurações iniciais
+        // =================== CONFIGURAÇÕES INICIAIS ===================
         const ADMIN_PASSWORD = "171";
-        let currentProduct = null;
-        let isAdminLoggedIn = false;
-        let pixConfig = null;
-        let currentUser = null;
-        let uploadedImage = null;
+        const PIX_KEY = "c5a32214-21da-4065-bce8-b6c719fb46f4";
         
-        // Produtos iniciais
-        const initialProducts = [
-            {
-                id: 1,
-                name: "Free Fire - 1000 Diamantes",
-                game: "Free Fire",
-                price: 29.90,
-                image: "https://i.imgur.com/4Qp6Q8s.png"
-            },
-            {
-                id: 2,
-                name: "Roblox - 400 Robux",
-                game: "Roblox",
-                price: 19.90,
-                image: "https://i.imgur.com/Vv7Q2ZL.png"
-            },
-            {
-                id: 3,
-                name: "Free Fire - 2000 Diamantes",
-                game: "Free Fire",
-                price: 59.90,
-                image: "https://i.imgur.com/4Qp6Q8s.png"
-            },
-            {
-                id: 4,
-                name: "Roblox - 800 Robux",
-                game: "Roblox",
-                price: 39.90,
-                image: "https://i.imgur.com/Vv7Q2ZL.png"
-            }
-        ];
+        // Estado da aplicação
+        let currentCart = [];
+        let products = [];
+        let customers = [];
+        let orders = [];
+        let pixConfig = null;
+        let isAdminLoggedIn = false;
         
         // =================== INICIALIZAÇÃO ===================
         
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("🚀 Sistema inicializando...");
+            console.log("🚀 Sistema Diamond Rush inicializando...");
             
-            // Atualizar ano no footer
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            // Inicializar animação de fundo
+            initBackgroundAnimation();
             
-            // Criar animações de fundo
-            createBackgroundAnimation();
+            // Carregar dados do localStorage
+            loadFromLocalStorage();
             
-            // Carregar dados
-            loadProducts();
-            loadPixConfig();
-            loadCustomers();
-            loadUsers();
+            // Inicializar produtos padrão se não existirem
+            if (products.length === 0) {
+                initDefaultProducts();
+            }
             
-            // Verificar se usuário está logado
-            checkUserLogin();
+            // Inicializar configuração PIX se não existir
+            if (!pixConfig) {
+                initPixConfig();
+            }
             
-            // Configurar event listeners
+            // Atualizar interface
+            updatePixDisplay();
+            renderProducts();
+            updateCartCount();
+            
+            // Configurar eventos
             setupEventListeners();
             
-            // Adicionar atalho secreto para o painel admin
-            setupAdminShortcut();
+            // Configurar atalho do teclado para admin (=)
+            setupKeyboardShortcuts();
             
             console.log("✅ Sistema carregado com sucesso!");
         });
         
-        // =================== SISTEMA DE UPLOAD DE IMAGEM ===================
+        // =================== FUNÇÕES DE INICIALIZAÇÃO ===================
         
-        function setupImageUpload() {
-            const imageInput = document.getElementById('imageInput');
-            const uploadArea = document.getElementById('uploadArea');
-            const imagePreview = document.getElementById('imagePreview');
-            const useImageBtn = document.getElementById('useImageBtn');
-            const clearImageBtn = document.getElementById('clearImageBtn');
+        function initBackgroundAnimation() {
+            const container = document.getElementById('backgroundAnimation');
             
-            // Clique na área de upload
-            uploadArea.addEventListener('click', function(e) {
-                if (e.target !== imageInput) {
-                    imageInput.click();
-                }
-            });
-            
-            // Arrastar e soltar
-            uploadArea.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                uploadArea.style.background = 'rgba(139, 0, 255, 0.2)';
-            });
-            
-            uploadArea.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                uploadArea.style.background = '';
-            });
-            
-            uploadArea.addEventListener('drop', function(e) {
-                e.preventDefault();
-                uploadArea.style.background = '';
-                
-                if (e.dataTransfer.files.length > 0) {
-                    const file = e.dataTransfer.files[0];
-                    if (file.type.startsWith('image/')) {
-                        handleImageFile(file);
-                    } else {
-                        alert('Por favor, selecione apenas arquivos de imagem!');
-                    }
-                }
-            });
-            
-            // Selecionar arquivo
-            imageInput.addEventListener('change', function(e) {
-                if (this.files && this.files[0]) {
-                    const file = this.files[0];
-                    if (file.type.startsWith('image/')) {
-                        handleImageFile(file);
-                    } else {
-                        alert('Por favor, selecione apenas arquivos de imagem!');
-                        this.value = '';
-                    }
-                }
-            });
-            
-            function handleImageFile(file) {
-                // Verificar tamanho (máximo 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('A imagem é muito grande! Tamanho máximo: 5MB');
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.classList.add('active');
-                    useImageBtn.style.display = 'inline-block';
-                    clearImageBtn.style.display = 'inline-block';
-                    
-                    // Converter para Base64
-                    uploadedImage = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        function useUploadedImage() {
-            if (uploadedImage) {
-                document.getElementById('productImage').value = uploadedImage;
-                alert('Imagem selecionada! Agora você pode adicionar o produto.');
-            }
-        }
-        
-        function clearImage() {
-            document.getElementById('imageInput').value = '';
-            document.getElementById('imagePreview').src = '';
-            document.getElementById('imagePreview').classList.remove('active');
-            document.getElementById('useImageBtn').style.display = 'none';
-            document.getElementById('clearImageBtn').style.display = 'none';
-            uploadedImage = null;
-            document.getElementById('productImage').value = '';
-        }
-        
-        // =================== SISTEMA DE USUÁRIOS ===================
-        
-        function loadUsers() {
-            const saved = localStorage.getItem('storeUsers');
-            window.users = saved ? JSON.parse(saved) : [];
-            console.log("📋 Usuários carregados:", window.users.length);
-        }
-        
-        function saveUsers() {
-            localStorage.setItem('storeUsers', JSON.stringify(window.users));
-            console.log("💾 Usuários salvos");
-        }
-        
-        function checkUserLogin() {
-            const loggedUser = localStorage.getItem('currentUser');
-            if (loggedUser) {
-                try {
-                    currentUser = JSON.parse(loggedUser);
-                    updateUserInterface();
-                    console.log("👤 Usuário logado:", currentUser.name);
-                } catch (e) {
-                    console.error("Erro ao carregar usuário:", e);
-                }
-            }
-        }
-        
-        function updateUserInterface() {
-            const mainContent = document.getElementById('mainContent');
-            const loginMessage = document.getElementById('loginMessage');
-            const userBtn = document.getElementById('userBtn');
-            
-            if (currentUser) {
-                // Usuário logado
-                mainContent.style.display = 'block';
-                loginMessage.style.display = 'none';
-                userBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.name.split(' ')[0]}`;
-                displayProducts();
-            } else {
-                // Usuário não logado
-                mainContent.style.display = 'none';
-                loginMessage.style.display = 'block';
-                userBtn.innerHTML = `<i class="fas fa-user"></i> Entrar`;
-            }
-        }
-        
-        function userLogin(email, password) {
-            const user = window.users.find(u => u.email === email && u.password === password);
-            if (user) {
-                currentUser = user;
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                updateUserInterface();
-                document.getElementById('authModal').classList.remove('active');
-                alert(`Bem-vindo de volta, ${user.name}!`);
-                return true;
-            }
-            return false;
-        }
-        
-        function userRegister(name, email, password) {
-            // Verificar se email já existe
-            if (window.users.some(u => u.email === email)) {
-                return { success: false, message: 'Este e-mail já está cadastrado!' };
-            }
-            
-            // Criar novo usuário
-            const newUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                password: password,
-                createdAt: new Date().toISOString()
-            };
-            
-            window.users.push(newUser);
-            saveUsers();
-            
-            // Logar automaticamente
-            currentUser = newUser;
-            localStorage.setItem('currentUser', JSON.stringify(newUser));
-            updateUserInterface();
-            
-            return { success: true, message: 'Conta criada com sucesso!' };
-        }
-        
-        function userLogout() {
-            currentUser = null;
-            localStorage.removeItem('currentUser');
-            updateUserInterface();
-            alert('Você saiu da sua conta.');
-        }
-        
-        // =================== FUNÇÕES PRINCIPAIS ===================
-        
-        function createBackgroundAnimation() {
-            const bgAnimation = document.getElementById('bgAnimation');
-            for (let i = 0; i < 10; i++) {
+            // Criar partículas
+            for (let i = 0; i < 20; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'bg-particle';
-                particle.style.width = Math.random() * 200 + 50 + 'px';
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 150 + 50 + 'px';
                 particle.style.height = particle.style.width;
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                bgAnimation.appendChild(particle);
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.opacity = Math.random() * 0.2 + 0.05;
+                container.appendChild(particle);
+            }
+            
+            // Criar diamantes flutuantes
+            for (let i = 0; i < 10; i++) {
+                const diamond = document.createElement('div');
+                diamond.className = 'diamond-particle';
+                diamond.innerHTML = '♦';
+                diamond.style.left = Math.random() * 100 + '%';
+                diamond.style.top = Math.random() * 100 + '%';
+                diamond.style.fontSize = Math.random() * 30 + 20 + 'px';
+                diamond.style.animationDelay = Math.random() * 25 + 's';
+                diamond.style.opacity = Math.random() * 0.1 + 0.05;
+                container.appendChild(diamond);
             }
         }
         
-        function loadProducts() {
-            const saved = localStorage.getItem('storeProducts');
-            if (saved) {
+        function loadFromLocalStorage() {
+            // Carregar produtos
+            const savedProducts = localStorage.getItem('diamondRushProducts');
+            if (savedProducts) {
                 try {
-                    window.products = JSON.parse(saved);
-                    console.log("🛒 Produtos carregados:", window.products.length);
+                    products = JSON.parse(savedProducts);
                 } catch (e) {
                     console.error("Erro ao carregar produtos:", e);
-                    window.products = initialProducts.slice();
+                    products = [];
                 }
-            } else {
-                window.products = initialProducts.slice();
-                saveProducts();
             }
-        }
-        
-        function saveProducts() {
-            localStorage.setItem('storeProducts', JSON.stringify(window.products));
-            console.log("💾 Produtos salvos");
-        }
-        
-        function loadPixConfig() {
-            const saved = localStorage.getItem('storePixConfig');
-            if (saved) {
+            
+            // Carregar carrinho
+            const savedCart = localStorage.getItem('diamondRushCart');
+            if (savedCart) {
                 try {
-                    pixConfig = JSON.parse(saved);
-                    updatePixDisplay();
-                    console.log("💰 Config PIX carregada");
+                    currentCart = JSON.parse(savedCart);
                 } catch (e) {
-                    console.error("Erro ao carregar PIX:", e);
+                    console.error("Erro ao carregar carrinho:", e);
+                    currentCart = [];
+                }
+            }
+            
+            // Carregar clientes
+            const savedCustomers = localStorage.getItem('diamondRushCustomers');
+            if (savedCustomers) {
+                try {
+                    customers = JSON.parse(savedCustomers);
+                } catch (e) {
+                    console.error("Erro ao carregar clientes:", e);
+                    customers = [];
+                }
+            }
+            
+            // Carregar pedidos
+            const savedOrders = localStorage.getItem('diamondRushOrders');
+            if (savedOrders) {
+                try {
+                    orders = JSON.parse(savedOrders);
+                } catch (e) {
+                    console.error("Erro ao carregar pedidos:", e);
+                    orders = [];
+                }
+            }
+            
+            // Carregar configuração PIX
+            const savedPixConfig = localStorage.getItem('diamondRushPixConfig');
+            if (savedPixConfig) {
+                try {
+                    pixConfig = JSON.parse(savedPixConfig);
+                } catch (e) {
+                    console.error("Erro ao carregar PIX config:", e);
+                    pixConfig = null;
+                }
+            }
+            
+            // Carregar estado admin
+            const savedAdminState = localStorage.getItem('diamondRushAdminState');
+            if (savedAdminState) {
+                try {
+                    isAdminLoggedIn = JSON.parse(savedAdminState);
+                } catch (e) {
+                    console.error("Erro ao carregar estado admin:", e);
+                    isAdminLoggedIn = false;
                 }
             }
         }
         
-        function savePixConfig() {
-            localStorage.setItem('storePixConfig', JSON.stringify(pixConfig));
-            console.log("💾 PIX configurado");
-        }
-        
-        function loadCustomers() {
-            const saved = localStorage.getItem('storeCustomers');
-            window.customers = saved ? JSON.parse(saved) : [];
-            console.log("👥 Clientes carregados:", window.customers.length);
-        }
-        
-        function saveCustomers() {
-            localStorage.setItem('storeCustomers', JSON.stringify(window.customers));
-            console.log("💾 Pedidos salvos");
-        }
-        
-        function displayProducts() {
-            if (!window.products || window.products.length === 0) {
-                console.log("⚠️ Nenhum produto para exibir");
-                return;
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('diamondRushProducts', JSON.stringify(products));
+                localStorage.setItem('diamondRushCart', JSON.stringify(currentCart));
+                localStorage.setItem('diamondRushCustomers', JSON.stringify(customers));
+                localStorage.setItem('diamondRushOrders', JSON.stringify(orders));
+                localStorage.setItem('diamondRushPixConfig', JSON.stringify(pixConfig));
+                localStorage.setItem('diamondRushAdminState', JSON.stringify(isAdminLoggedIn));
+            } catch (e) {
+                console.error("Erro ao salvar no localStorage:", e);
             }
-            
-            const productsGrid = document.getElementById('productsGrid');
-            productsGrid.innerHTML = '';
-            
-            window.products.forEach(function(product) {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200/8a2be2/ffffff?text=Imagem+Indisponível'">
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <span class="product-game">${product.game}</span>
-                        <div class="product-price">R$ ${product.price.toFixed(2)}</div>
-                        <button class="buy-btn" onclick="startPayment(${product.id})">
-                            <i class="fas fa-qrcode"></i> Comprar com PIX
-                        </button>
-                    </div>
-                `;
-                productsGrid.appendChild(card);
-            });
         }
         
-        function displayAdminProducts() {
-            const list = document.getElementById('adminProductsList');
-            list.innerHTML = '';
+        function initDefaultProducts() {
+            products = [
+                {
+                    id: 1,
+                    name: "1000 Diamantes",
+                    type: "Free Fire",
+                    price: 9.90,
+                    originalPrice: 19.90,
+                    description: "1000 diamantes para Free Fire + bônus exclusivos",
+                    icon: "fas fa-gem"
+                },
+                {
+                    id: 2,
+                    name: "3000 Diamantes",
+                    type: "Free Fire",
+                    price: 24.90,
+                    originalPrice: 49.90,
+                    description: "3000 diamantes + Mochila Nível 3",
+                    icon: "fas fa-gem"
+                },
+                {
+                    id: 3,
+                    name: "800 Robux",
+                    type: "Roblox",
+                    price: 14.90,
+                    originalPrice: 29.90,
+                    description: "800 Robux para Roblox",
+                    icon: "fas fa-coins"
+                },
+                {
+                    id: 4,
+                    name: "2500 Robux",
+                    type: "Roblox",
+                    price: 39.90,
+                    originalPrice: 79.90,
+                    description: "2500 Robux + Membership Premium",
+                    icon: "fas fa-coins"
+                },
+                {
+                    id: 5,
+                    name: "7000 Diamantes",
+                    type: "Free Fire",
+                    price: 49.90,
+                    originalPrice: 99.90,
+                    description: "7000 diamantes + Elite Pass mensal",
+                    icon: "fas fa-gem"
+                },
+                {
+                    id: 6,
+                    name: "5000 Robux",
+                    type: "Roblox",
+                    price: 79.90,
+                    originalPrice: 159.90,
+                    description: "5000 Robux + Acesso VIP",
+                    icon: "fas fa-coins"
+                }
+            ];
             
-            if (!window.products || window.products.length === 0) {
-                list.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Nenhum produto cadastrado.</p>';
-                return;
-            }
+            saveToLocalStorage();
+        }
+        
+        function initPixConfig() {
+            pixConfig = {
+                type: "random",
+                key: PIX_KEY,
+                name: "Diamond Rush Store",
+                city: "São Paulo"
+            };
             
-            window.products.forEach(function(product) {
-                const item = document.createElement('div');
-                item.style.cssText = 'padding: 1rem; margin-bottom: 1rem; background: rgba(40, 40, 40, 0.9); border-radius: 8px; border-left: 4px solid var(--purple-accent);';
-                item.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <strong>${product.name}</strong>
-                            <div style="color: var(--text-gray); font-size: 0.9rem;">
-                                ${product.game} - R$ ${product.price.toFixed(2)}
-                            </div>
+            saveToLocalStorage();
+        }
+        
+        // =================== FUNÇÕES DA LOJA ===================
+        
+        function renderProducts() {
+            const container = document.getElementById('productsGrid');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-header">
+                        <div class="product-icon">
+                            <i class="${product.icon}"></i>
                         </div>
-                        <button onclick="deleteProduct(${product.id})" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
-                            <i class="fas fa-trash"></i>
+                        <h3 class="product-title">${product.name}</h3>
+                        <span class="product-game">${product.type}</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-price">
+                            R$ ${product.price.toFixed(2)}
+                            ${product.originalPrice ? `<span>R$ ${product.originalPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <p class="product-description">${product.description}</p>
+                        <button class="buy-button" onclick="addToCart(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
                         </button>
                     </div>
                 `;
-                list.appendChild(item);
-            });
-        }
-        
-        function displayCustomers() {
-            const tbody = document.getElementById('customersTableBody');
-            tbody.innerHTML = '';
-            
-            if (!window.customers || window.customers.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-gray); padding: 2rem;">Nenhum pedido registrado ainda.</td></tr>';
-                return;
-            }
-            
-            window.customers.forEach(function(customer) {
-                const row = document.createElement('tr');
-                const date = new Date(customer.date).toLocaleString('pt-BR');
-                const statusClass = customer.status === 'paid' ? 'status-paid' : 'status-pending';
-                const statusText = customer.status === 'paid' ? 'PAGO' : 'PENDENTE';
                 
-                row.innerHTML = `
-                    <td>${date}</td>
-                    <td>${customer.customerName}</td>
-                    <td>${customer.customerEmail}</td>
-                    <td>${customer.productName}</td>
-                    <td>R$ ${customer.amount.toFixed(2)}</td>
-                    <td class="${statusClass}">${statusText}</td>
-                    <td>${customer.gameId}</td>
+                container.appendChild(productCard);
+            });
+        }
+        
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = currentCart.find(item => item.productId === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                currentCart.push({
+                    productId: productId,
+                    name: product.name,
+                    price: product.price,
+                    type: product.type,
+                    quantity: 1
+                });
+            }
+            
+            // Feedback visual
+            showNotification(`${product.name} adicionado ao carrinho!`, 'success');
+            
+            updateCartCount();
+            saveToLocalStorage();
+        }
+        
+        function updateCartCount() {
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const totalItems = currentCart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCount.textContent = totalItems;
+                cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+        
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (!container) return;
+            
+            if (currentCart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h4>Seu carrinho está vazio</h4>
+                        <p>Adicione produtos para continuar</p>
+                    </div>
                 `;
-                tbody.appendChild(row);
+                if (cartTotal) cartTotal.style.display = 'none';
+                if (checkoutBtn) checkoutBtn.style.display = 'none';
+                return;
+            }
+            
+            let total = 0;
+            container.innerHTML = '';
+            
+            currentCart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <div class="cart-item-details">
+                            <span>${item.type}</span>
+                            <span>R$ ${item.price.toFixed(2)} cada</span>
+                        </div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="updateCartQuantity(${index}, ${item.quantity - 1})">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateCartQuantity(${index}, ${item.quantity + 1})">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: bold; color: var(--primary-red);">
+                                R$ ${itemTotal.toFixed(2)}
+                            </div>
+                            <button class="remove-item" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i> Remover
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(cartItem);
             });
+            
+            if (document.getElementById('totalAmount')) {
+                document.getElementById('totalAmount').textContent = `R$ ${total.toFixed(2)}`;
+            }
+            if (cartTotal) cartTotal.style.display = 'block';
+            if (checkoutBtn) checkoutBtn.style.display = 'block';
         }
         
-        function updatePixDisplay() {
-            if (pixConfig) {
-                document.getElementById('currentPixConfig').style.display = 'block';
-                document.getElementById('currentPixKey').textContent = pixConfig.key;
-                document.getElementById('currentPixName').textContent = pixConfig.name;
-                document.getElementById('currentPixCity').textContent = pixConfig.city;
+        function updateCartQuantity(index, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(index);
+                return;
+            }
+            
+            currentCart[index].quantity = newQuantity;
+            saveToLocalStorage();
+            updateCartCount();
+            renderCart();
+        }
+        
+        function removeFromCart(index) {
+            currentCart.splice(index, 1);
+            saveToLocalStorage();
+            updateCartCount();
+            renderCart();
+            showNotification('Produto removido do carrinho', 'warning');
+        }
+        
+        function clearCart() {
+            currentCart = [];
+            saveToLocalStorage();
+            updateCartCount();
+            renderCart();
+        }
+        
+        function openCheckoutModal() {
+            if (currentCart.length === 0) {
+                showNotification('Adicione produtos ao carrinho primeiro!', 'warning');
+                return;
+            }
+            
+            // Calcular total
+            const total = currentCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // Atualizar resumo do pedido
+            const orderSummary = document.getElementById('orderSummary');
+            const itemsList = currentCart.map(item => 
+                `${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2)}`
+            ).join('<br>');
+            
+            if (orderSummary) {
+                orderSummary.innerHTML = `
+                    <strong>Itens:</strong><br>
+                    ${itemsList}<br><br>
+                    <strong>Total: R$ ${total.toFixed(2)}</strong><br><br>
+                    Pague via PIX e envie o comprovante.
+                `;
+            }
+            
+            // Atualizar chave PIX no checkout
+            if (document.getElementById('checkoutPixKey') && pixConfig) {
+                document.getElementById('checkoutPixKey').textContent = pixConfig.key;
+            }
+            
+            // Mostrar modal
+            const checkoutModal = document.getElementById('checkoutModal');
+            if (checkoutModal) {
+                checkoutModal.classList.add('active');
             }
         }
         
-        // =================== SISTEMA DE PAGAMENTO ===================
-        
-        function startPayment(productId) {
-            if (!currentUser) {
-                alert('Por favor, faça login para comprar!');
-                document.getElementById('authModal').classList.add('active');
+        function processOrder() {
+            const email = document.getElementById('customerEmail')?.value.trim();
+            const gameId = document.getElementById('customerGameId')?.value.trim();
+            const name = document.getElementById('customerName')?.value.trim();
+            
+            if (!email || !gameId || !name) {
+                showNotification('Preencha todos os campos!', 'warning');
                 return;
             }
             
-            const product = window.products.find(p => p.id === productId);
-            if (!product) {
-                alert('Produto não encontrado!');
-                return;
-            }
-            
-            currentProduct = product;
-            
-            // Verificar se tem PIX configurado
-            if (!pixConfig) {
-                alert('⚠️ Sistema PIX não configurado. Configure no painel admin primeiro.');
-                openAdminModal();
-                switchTab('pix');
-                return;
-            }
-            
-            // Atualizar modal de pagamento
-            document.getElementById('paymentProductName').textContent = product.name;
-            document.getElementById('paymentAmount').textContent = 'R$ ' + product.price.toFixed(2);
-            document.getElementById('pixKeyDisplay').textContent = pixConfig.key;
-            document.getElementById('customerInfo').textContent = currentUser.name;
-            document.getElementById('customerEmailInfo').textContent = currentUser.email;
-            document.getElementById('customerGameId').value = '';
-            
-            // Abrir modal
-            document.getElementById('paymentModal').classList.add('active');
-        }
-        
-        function copyPixKey() {
-            if (!pixConfig) {
-                alert('PIX não configurado!');
-                return;
-            }
-            
-            const key = pixConfig.key;
-            navigator.clipboard.writeText(key).then(() => {
-                alert('✅ Chave PIX copiada para a área de transferência!');
-            }).catch(err => {
-                alert('❌ Erro ao copiar: ' + err);
-            });
-        }
-        
-        function confirmOrder() {
-            const gameId = document.getElementById('customerGameId').value.trim();
-            
-            if (!gameId) {
-                alert('Por favor, informe seu ID no jogo!');
-                return;
-            }
+            // Calcular total
+            const total = currentCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
             // Criar pedido
             const order = {
                 id: Date.now(),
                 date: new Date().toISOString(),
-                customerName: currentUser.name,
-                customerEmail: currentUser.email,
-                customerId: currentUser.id,
-                gameId: gameId,
-                productName: currentProduct.name,
-                amount: currentProduct.price,
-                status: 'pending'
+                customer: {
+                    name: name,
+                    email: email,
+                    gameId: gameId
+                },
+                items: [...currentCart],
+                total: total,
+                status: 'pending',
+                paymentMethod: 'PIX'
             };
             
-            // Adicionar aos clientes
-            window.customers.push(order);
-            saveCustomers();
+            // Adicionar aos pedidos
+            orders.push(order);
             
-            // Fechar modal
-            document.getElementById('paymentModal').classList.remove('active');
+            // Verificar se o cliente já existe
+            let customer = customers.find(c => c.email === email);
+            if (!customer) {
+                customer = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    gameId: gameId,
+                    phone: '',
+                    totalSpent: 0,
+                    ordersCount: 0,
+                    firstPurchase: new Date().toISOString(),
+                    lastPurchase: new Date().toISOString()
+                };
+                customers.push(customer);
+            }
             
-            // Mostrar instruções
-            alert(`✅ PEDIDO REGISTRADO!\n\nOlá ${currentUser.name},\n\nPague R$ ${currentProduct.price.toFixed(2)} via PIX para:\n\n${pixConfig.key}\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ${currentUser.email}`);
+            // Atualizar dados do cliente
+            customer.totalSpent += total;
+            customer.ordersCount += 1;
+            customer.lastPurchase = new Date().toISOString();
             
-            // Atualizar lista de clientes no admin
+            // Salvar dados
+            saveToLocalStorage();
+            
+            // Limpar carrinho
+            clearCart();
+            
+            // Fechar modais
+            const cartModal = document.getElementById('cartModal');
+            const checkoutModal = document.getElementById('checkoutModal');
+            if (cartModal) cartModal.classList.remove('active');
+            if (checkoutModal) checkoutModal.classList.remove('active');
+            
+            // Mostrar mensagem de sucesso
+            showNotification('Pedido registrado com sucesso! Pague via PIX e envie o comprovante.', 'success');
+            
+            // Atualizar painel admin se estiver aberto
             if (isAdminLoggedIn) {
-                displayCustomers();
-            }
-            
-            // Resetar
-            currentProduct = null;
-        }
-        
-        // =================== PAINEL ADMINISTRATIVO ===================
-        
-        function setupAdminShortcut() {
-            // Atalho secreto: Ctrl + Alt + A
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.altKey && e.key === 'a') {
-                    e.preventDefault();
-                    openAdminModal();
-                }
-            });
-            
-            // Clique triplo no logo
-            let clickCount = 0;
-            let clickTimer;
-            
-            document.querySelector('.logo').addEventListener('click', function() {
-                clickCount++;
-                if (clickCount === 3) {
-                    clearTimeout(clickTimer);
-                    clickCount = 0;
-                    openAdminModal();
-                } else {
-                    clearTimeout(clickTimer);
-                    clickTimer = setTimeout(function() {
-                        clickCount = 0;
-                    }, 500);
-                }
-            });
-        }
-        
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.add('active');
-            if (!isAdminLoggedIn) {
-                showTab('login');
-            } else {
-                showTab('products');
-                displayAdminProducts();
-                displayCustomers();
+                updateAdminDashboard();
             }
         }
         
-        function showTab(tabName) {
-            // Remover active de todas as tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+        // =================== FUNÇÕES PIX ===================
+        
+        function updatePixDisplay() {
+            const pixDisplay = document.getElementById('pixKeyDisplay');
+            const checkoutPixKey = document.getElementById('checkoutPixKey');
+            const pixPreview = document.getElementById('pixPreview');
             
-            // Ativar tab selecionada
-            const tabBtn = document.querySelector('[data-tab="' + tabName + '"]');
-            const tabContent = document.getElementById(tabName + 'Tab');
-            
-            if (tabBtn) tabBtn.classList.add('active');
-            if (tabContent) tabContent.classList.add('active');
+            if (pixConfig) {
+                if (pixDisplay) {
+                    pixDisplay.textContent = pixConfig.key;
+                }
+                
+                if (checkoutPixKey) {
+                    checkoutPixKey.textContent = pixConfig.key;
+                }
+                
+                if (pixPreview) {
+                    pixPreview.textContent = pixConfig.key;
+                }
+            }
         }
         
-        function switchTab(tabName) {
-            if (!isAdminLoggedIn && tabName !== 'login') {
-                alert('Faça login primeiro');
+        function copyPixKey() {
+            if (!pixConfig) {
+                showNotification('Chave PIX não configurada', 'warning');
                 return;
             }
-            showTab(tabName);
+            
+            navigator.clipboard.writeText(pixConfig.key).then(() => {
+                showNotification('Chave PIX copiada para a área de transferência!', 'success');
+            }).catch(err => {
+                showNotification('Erro ao copiar chave PIX', 'warning');
+                console.error('Erro ao copiar:', err);
+            });
         }
         
-        function adminLogin() {
-            const password = document.getElementById('adminPassword').value;
+        function generateRandomPixKey() {
+            const newKey = 'xxxx-xxxx-xxxx-xxxx'.replace(/x/g, () => 
+                Math.floor(Math.random() * 16).toString(16)
+            );
+            
+            const pixKeyValue = document.getElementById('pixKeyValue');
+            const pixPreview = document.getElementById('pixPreview');
+            
+            if (pixKeyValue) pixKeyValue.value = newKey;
+            if (pixPreview) pixPreview.textContent = newKey;
+            
+            showNotification('Nova chave PIX gerada!', 'success');
+        }
+        
+        function savePixConfig(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('pixKeyType')?.value;
+            const key = document.getElementById('pixKeyValue')?.value.trim();
+            const name = document.getElementById('pixKeyName')?.value.trim();
+            const city = document.getElementById('pixKeyCity')?.value.trim();
+            
+            if (!key || !name || !city) {
+                showNotification('Preencha todos os campos!', 'warning');
+                return;
+            }
+            
+            pixConfig = {
+                type: type || "random",
+                key: key,
+                name: name,
+                city: city
+            };
+            
+            saveToLocalStorage();
+            updatePixDisplay();
+            
+            showNotification('Configurações PIX salvas com sucesso!', 'success');
+        }
+        
+        // =================== FUNÇÕES DO PAINEL ADMIN ===================
+        
+        function setupKeyboardShortcuts() {
+            // Listener para tecla "="
+            document.addEventListener('keydown', function(e) {
+                // Verificar se é a tecla "="
+                if (e.key === '=') {
+                    e.preventDefault();
+                    console.log("Tecla = pressionada - Abrindo painel admin");
+                    openAdminLogin();
+                }
+                
+                // Atalho: ESC para fechar modais
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+            
+            console.log("🔑 Painel Admin: Pressione a tecla '=' para abrir");
+        }
+        
+        function openAdminLogin() {
+            console.log("Abrindo login admin...");
+            if (isAdminLoggedIn) {
+                openAdminPanel();
+            } else {
+                const loginModal = document.getElementById('loginModal');
+                if (loginModal) {
+                    loginModal.classList.add('active');
+                    const adminPasswordInput = document.getElementById('adminPassword');
+                    if (adminPasswordInput) {
+                        adminPasswordInput.focus();
+                    }
+                }
+            }
+        }
+        
+        function loginAdmin() {
+            const adminPasswordInput = document.getElementById('adminPassword');
+            const password = adminPasswordInput ? adminPasswordInput.value : '';
+            const errorElement = document.getElementById('loginError');
             
             if (password === ADMIN_PASSWORD) {
                 isAdminLoggedIn = true;
-                document.getElementById('adminPassword').value = '';
-                showTab('products');
-                displayAdminProducts();
-                displayCustomers();
-                // Configurar upload de imagem
-                setupImageUpload();
-                alert('✅ Acesso admin concedido!');
+                saveToLocalStorage();
+                
+                const loginModal = document.getElementById('loginModal');
+                if (loginModal) {
+                    loginModal.classList.remove('active');
+                }
+                
+                openAdminPanel();
+                
+                showNotification('Painel administrativo acessado com sucesso!', 'success');
             } else {
-                alert('❌ Senha incorreta!');
+                if (errorElement) {
+                    errorElement.style.display = 'block';
+                }
+                if (adminPasswordInput) {
+                    adminPasswordInput.value = '';
+                }
+                
+                // Agitar o input
+                const input = adminPasswordInput;
+                if (input) {
+                    input.style.animation = 'none';
+                    setTimeout(() => {
+                        input.style.animation = 'shake 0.5s';
+                    }, 10);
+                }
+                
+                setTimeout(() => {
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                }, 3000);
             }
         }
         
-        function addNewProduct(e) {
-            e.preventDefault();
+        function openAdminPanel() {
+            if (!isAdminLoggedIn) return;
             
-            const name = document.getElementById('productName').value;
-            const game = document.getElementById('productGame').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const image = document.getElementById('productImage').value;
+            updateAdminDashboard();
+            const adminPanel = document.getElementById('adminPanel');
+            if (adminPanel) {
+                adminPanel.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeAdminPanel() {
+            const adminPanel = document.getElementById('adminPanel');
+            if (adminPanel) {
+                adminPanel.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            saveToLocalStorage();
+            closeAdminPanel();
+            showNotification('Sessão administrativa encerrada', 'info');
+        }
+        
+        function updateAdminDashboard() {
+            if (!isAdminLoggedIn) return;
             
-            if (!name || !game || !price) {
-                alert('Preencha todos os campos obrigatórios!');
+            // Atualizar estatísticas
+            const totalOrdersEl = document.getElementById('totalOrders');
+            const totalCustomersEl = document.getElementById('totalCustomers');
+            const totalProductsEl = document.getElementById('totalProducts');
+            const totalRevenueEl = document.getElementById('totalRevenue');
+            
+            if (totalOrdersEl) totalOrdersEl.textContent = orders.length;
+            if (totalCustomersEl) totalCustomersEl.textContent = customers.length;
+            if (totalProductsEl) totalProductsEl.textContent = products.length;
+            
+            const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+            if (totalRevenueEl) totalRevenueEl.textContent = `R$ ${totalRevenue.toFixed(2)}`;
+            
+            // Atualizar pedidos recentes
+            updateRecentOrders();
+            
+            // Atualizar lista de clientes
+            updateCustomersTable();
+            
+            // Atualizar lista de pedidos
+            updateOrdersTable();
+            
+            // Atualizar lista de produtos
+            updateAdminProductsList();
+            
+            // Atualizar formulário PIX
+            updatePixForm();
+        }
+        
+        function updateRecentOrders() {
+            const container = document.getElementById('recentOrders');
+            if (!container) return;
+            
+            const recentOrders = orders.slice(-5).reverse();
+            
+            if (recentOrders.length === 0) {
+                container.innerHTML = `
+                    <p style="color: var(--text-gray); text-align: center; padding: 2rem;">
+                        Nenhum pedido registrado ainda.
+                    </p>
+                `;
                 return;
             }
             
-            if (!image) {
-                alert('Por favor, selecione uma imagem ou cole uma URL!');
+            container.innerHTML = '';
+            
+            recentOrders.forEach(order => {
+                const orderDate = new Date(order.date).toLocaleDateString('pt-BR');
+                const statusClass = order.status === 'paid' ? 'status-paid' : 
+                                  order.status === 'pending' ? 'status-pending' : 'status-cancelled';
+                const statusText = order.status === 'paid' ? 'PAGO' : 
+                                 order.status === 'pending' ? 'PENDENTE' : 'CANCELADO';
+                
+                const orderElement = document.createElement('div');
+                orderElement.className = 'product-item';
+                orderElement.innerHTML = `
+                    <div class="product-item-info">
+                        <h4>Pedido #${order.id}</h4>
+                        <div class="product-item-details">
+                            <span>${orderDate}</span>
+                            <span>${order.customer.name}</span>
+                            <span class="${statusClass}">${statusText}</span>
+                        </div>
+                    </div>
+                    <div class="product-item-price">
+                        R$ ${order.total.toFixed(2)}
+                    </div>
+                `;
+                
+                container.appendChild(orderElement);
+            });
+        }
+        
+        function updateCustomersTable() {
+            const tbody = document.getElementById('customersTable');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            customers.forEach(customer => {
+                const firstPurchase = new Date(customer.firstPurchase).toLocaleDateString('pt-BR');
+                const lastPurchase = new Date(customer.lastPurchase).toLocaleDateString('pt-BR');
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${firstPurchase}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.gameId}</td>
+                    <td>${customer.phone || 'Não informado'}</td>
+                    <td>R$ ${customer.totalSpent.toFixed(2)}</td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateOrdersTable() {
+            const tbody = document.getElementById('ordersTable');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            orders.forEach(order => {
+                const orderDate = new Date(order.date).toLocaleDateString('pt-BR');
+                const statusClass = order.status === 'paid' ? 'status-paid' : 
+                                  order.status === 'pending' ? 'status-pending' : 'status-cancelled';
+                const statusText = order.status === 'paid' ? 'PAGO' : 
+                                 order.status === 'pending' ? 'PENDENTE' : 'CANCELADO';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>#${order.id}</td>
+                    <td>${orderDate}</td>
+                    <td>${order.customer.name}</td>
+                    <td>${order.items[0]?.name || 'Produto'}${order.items.length > 1 ? ` +${order.items.length-1}` : ''}</td>
+                    <td>R$ ${order.total.toFixed(2)}</td>
+                    <td><span class="status ${statusClass}">${statusText}</span></td>
+                    <td class="action-buttons">
+                        <button class="action-btn edit-btn" onclick="editOrder(${order.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteOrder(${order.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateAdminProductsList() {
+            const container = document.getElementById('adminProductsList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-item';
+                productElement.innerHTML = `
+                    <div class="product-item-info">
+                        <h4>${product.name}</h4>
+                        <div class="product-item-details">
+                            <span>${product.type}</span>
+                            <span>ID: ${product.id}</span>
+                            <span>Criado: ${new Date().toLocaleDateString('pt-BR')}</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div class="product-item-price">
+                            R$ ${product.price.toFixed(2)}
+                        </div>
+                        <div class="action-buttons">
+                            <button class="action-btn edit-btn" onclick="editProduct(${product.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(productElement);
+            });
+        }
+        
+        function updatePixForm() {
+            if (!pixConfig) return;
+            
+            const pixKeyType = document.getElementById('pixKeyType');
+            const pixKeyValue = document.getElementById('pixKeyValue');
+            const pixKeyName = document.getElementById('pixKeyName');
+            const pixKeyCity = document.getElementById('pixKeyCity');
+            const pixPreview = document.getElementById('pixPreview');
+            
+            if (pixKeyType) pixKeyType.value = pixConfig.type;
+            if (pixKeyValue) pixKeyValue.value = pixConfig.key;
+            if (pixKeyName) pixKeyName.value = pixConfig.name;
+            if (pixKeyCity) pixKeyCity.value = pixConfig.city;
+            if (pixPreview) pixPreview.textContent = pixConfig.key;
+        }
+        
+        function addProduct(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName')?.value.trim();
+            const type = document.getElementById('productType')?.value;
+            const price = parseFloat(document.getElementById('productPrice')?.value);
+            const originalPrice = parseFloat(document.getElementById('productOriginalPrice')?.value) || null;
+            const description = document.getElementById('productDescription')?.value.trim();
+            const icon = document.getElementById('productIcon')?.value.trim();
+            
+            if (!name || !type || !price || !description || !icon) {
+                showNotification('Preencha todos os campos obrigatórios!', 'warning');
                 return;
             }
             
             const newProduct = {
-                id: window.products.length > 0 ? Math.max(...window.products.map(p => p.id)) + 1 : 1,
+                id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
                 name: name,
-                game: game,
+                type: type,
                 price: price,
-                image: image
+                originalPrice: originalPrice,
+                description: description,
+                icon: icon
             };
             
-            window.products.push(newProduct);
-            saveProducts();
-            displayProducts();
-            displayAdminProducts();
+            products.push(newProduct);
+            saveToLocalStorage();
+            renderProducts();
+            updateAdminProductsList();
             
             // Limpar formulário
-            document.getElementById('addProductForm').reset();
-            clearImage();
+            e.target.reset();
+            const productIconInput = document.getElementById('productIcon');
+            if (productIconInput) {
+                productIconInput.value = 'fas fa-gem';
+            }
             
-            alert('✅ Produto adicionado com sucesso!');
+            showNotification('Produto adicionado com sucesso!', 'success');
+        }
+        
+        function editProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Preencher formulário
+            const productNameInput = document.getElementById('productName');
+            const productTypeSelect = document.getElementById('productType');
+            const productPriceInput = document.getElementById('productPrice');
+            const productOriginalPriceInput = document.getElementById('productOriginalPrice');
+            const productDescriptionInput = document.getElementById('productDescription');
+            const productIconInput = document.getElementById('productIcon');
+            
+            if (productNameInput) productNameInput.value = product.name;
+            if (productTypeSelect) productTypeSelect.value = product.type;
+            if (productPriceInput) productPriceInput.value = product.price;
+            if (productOriginalPriceInput) productOriginalPriceInput.value = product.originalPrice || '';
+            if (productDescriptionInput) productDescriptionInput.value = product.description;
+            if (productIconInput) productIconInput.value = product.icon;
+            
+            // Rolagem para o formulário
+            const productsTab = document.getElementById('productsTab');
+            if (productsTab) {
+                productsTab.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            showNotification(`Editando produto: ${product.name}`, 'info');
         }
         
         function deleteProduct(productId) {
             if (!confirm('Tem certeza que deseja excluir este produto?')) return;
             
-            window.products = window.products.filter(p => p.id !== productId);
-            saveProducts();
-            displayProducts();
-            displayAdminProducts();
+            products = products.filter(p => p.id !== productId);
+            saveToLocalStorage();
+            renderProducts();
+            updateAdminProductsList();
+            updateAdminDashboard();
             
-            alert('✅ Produto excluído!');
+            showNotification('Produto excluído com sucesso!', 'success');
         }
         
-        function savePixConfigForm(e) {
-            e.preventDefault();
-            
-            const type = document.getElementById('pixType').value;
-            const key = document.getElementById('pixKey').value;
-            const name = document.getElementById('pixName').value;
-            const city = document.getElementById('pixCity').value;
-            
-            if (!key || !name || !city) {
-                alert('Preencha todos os campos!');
-                return;
-            }
-            
-            pixConfig = { type: type, key: key, name: name, city: city };
-            savePixConfig();
-            updatePixDisplay();
-            
-            alert('✅ Configurações PIX salvas com sucesso!');
+        function editCustomer(customerId) {
+            // Implementação básica - pode ser expandida
+            showNotification(`Editando cliente ID: ${customerId}`, 'info');
         }
+        
+        function deleteCustomer(customerId) {
+            if (!confirm('Tem certeza que deseja excluir este cliente?')) return;
+            
+            customers = customers.filter(c => c.id !== customerId);
+            saveToLocalStorage();
+            updateCustomersTable();
+            updateAdminDashboard();
+            
+            showNotification('Cliente excluído com sucesso!', 'success');
+        }
+        
+        function editOrder(orderId) {
+            // Implementação básica - pode ser expandida
+            showNotification(`Editando pedido ID: ${orderId}`, 'info');
+        }
+        
+        function deleteOrder(orderId) {
+            if (!confirm('Tem certeza que deseja excluir este pedido?')) return;
+            
+            orders = orders.filter(o => o.id !== orderId);
+            saveToLocalStorage();
+            updateOrdersTable();
+            updateAdminDashboard();
+            
+            showNotification('Pedido excluído com sucesso!', 'success');
+        }
+        
+        function switchTab(tabName) {
+            // Esconder todas as tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover active de todos os botões
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar tab selecionada
+            const targetTab = document.getElementById(`${tabName}Tab`);
+            const targetBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            
+            if (targetTab) targetTab.classList.add('active');
+            if (targetBtn) targetBtn.classList.add('active');
+        }
+        
+        // =================== FUNÇÕES UTILITÁRIAS ===================
+        
+        function showNotification(message, type = 'info') {
+            // Criar notificação
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 1.5rem;
+                background: ${type === 'success' ? 'rgba(0, 204, 102, 0.9)' : 
+                           type === 'warning' ? 'rgba(255, 153, 0, 0.9)' : 
+                           type === 'error' ? 'rgba(255, 0, 0, 0.9)' : 'rgba(139, 0, 255, 0.9)'};
+                color: white;
+                border-radius: 8px;
+                z-index: 5000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease-out;
+                max-width: 400px;
+                backdrop-filter: blur(10px);
+            `;
+            
+            const icon = type === 'success' ? 'fa-check-circle' :
+                        type === 'warning' ? 'fa-exclamation-triangle' :
+                        type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        function closeAllModals() {
+            document.querySelectorAll('.modal.active, .login-modal.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            
+            if (!isAdminLoggedIn) {
+                closeAdminPanel();
+            }
+        }
+        
+        // =================== CONFIGURAÇÃO DE EVENTOS ===================
         
         function setupEventListeners() {
-            console.log("⚡ Configurando eventos...");
+            // Carrinho
+            const cartIcon = document.getElementById('cartIcon');
+            const closeCartBtn = document.getElementById('closeCartBtn');
             
-            // Botão de usuário
-            document.getElementById('userBtn').addEventListener('click', function() {
-                if (currentUser) {
-                    if (confirm('Deseja sair da sua conta?')) {
-                        userLogout();
+            if (cartIcon) {
+                cartIcon.addEventListener('click', () => {
+                    renderCart();
+                    const cartModal = document.getElementById('cartModal');
+                    if (cartModal) {
+                        cartModal.classList.add('active');
                     }
-                } else {
-                    document.getElementById('authModal').classList.add('active');
-                }
-            });
-            
-            // Botão de login prompt
-            document.getElementById('loginPromptBtn').addEventListener('click', function() {
-                document.getElementById('authModal').classList.add('active');
-            });
-            
-            // Fechar modal auth
-            document.getElementById('closeAuthBtn').addEventListener('click', function() {
-                document.getElementById('authModal').classList.remove('active');
-            });
-            
-            // Tabs auth
-            document.querySelectorAll('.auth-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const form = this.getAttribute('data-form');
-                    
-                    // Ativar tab
-                    document.querySelectorAll('.auth-tab').forEach(t => {
-                        t.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // Mostrar formulário
-                    document.querySelectorAll('.auth-form').forEach(f => {
-                        f.classList.remove('active');
-                    });
-                    document.getElementById(form + 'Form').classList.add('active');
                 });
-            });
+            }
             
-            // Login de usuário
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                
-                if (userLogin(email, password)) {
-                    this.reset();
-                } else {
-                    alert('E-mail ou senha incorretos!');
-                }
-            });
+            if (closeCartBtn) {
+                closeCartBtn.addEventListener('click', () => {
+                    const cartModal = document.getElementById('cartModal');
+                    if (cartModal) {
+                        cartModal.classList.remove('active');
+                    }
+                });
+            }
             
-            // Cadastro de usuário
-            document.getElementById('registerForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('registerName').value;
-                const email = document.getElementById('registerEmail').value;
-                const password = document.getElementById('registerPassword').value;
-                const confirm = document.getElementById('registerConfirm').value;
-                
-                if (password !== confirm) {
-                    alert('As senhas não coincidem!');
-                    return;
-                }
-                
-                if (password.length < 6) {
-                    alert('A senha deve ter no mínimo 6 caracteres!');
-                    return;
-                }
-                
-                const result = userRegister(name, email, password);
-                if (result.success) {
-                    this.reset();
-                    // Voltar para login
-                    document.querySelector('.auth-tab[data-form="login"]').click();
-                } else {
-                    alert(result.message);
-                }
-            });
+            // Checkout
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const closeCheckoutBtn = document.getElementById('closeCheckoutBtn');
+            const confirmOrderBtn = document.getElementById('confirmOrderBtn');
             
-            // Fechar modal admin
-            document.getElementById('closeAdminBtn').addEventListener('click', function() {
-                document.getElementById('adminModal').classList.remove('active');
-            });
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', openCheckoutModal);
+            }
             
-            // Botões das tabs admin
+            if (closeCheckoutBtn) {
+                closeCheckoutBtn.addEventListener('click', () => {
+                    const checkoutModal = document.getElementById('checkoutModal');
+                    if (checkoutModal) {
+                        checkoutModal.classList.remove('active');
+                    }
+                });
+            }
+            
+            if (confirmOrderBtn) {
+                confirmOrderBtn.addEventListener('click', processOrder);
+            }
+            
+            // Copiar PIX
+            const copyPixBtn = document.getElementById('copyPixBtn');
+            const copyCheckoutPixBtn = document.getElementById('copyCheckoutPixBtn');
+            
+            if (copyPixBtn) {
+                copyPixBtn.addEventListener('click', copyPixKey);
+            }
+            
+            if (copyCheckoutPixBtn) {
+                copyCheckoutPixBtn.addEventListener('click', copyPixKey);
+            }
+            
+            // Admin Login
+            const loginAdminBtn = document.getElementById('loginAdminBtn');
+            const adminPasswordInput = document.getElementById('adminPassword');
+            
+            if (loginAdminBtn) {
+                loginAdminBtn.addEventListener('click', loginAdmin);
+            }
+            
+            if (adminPasswordInput) {
+                adminPasswordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        loginAdmin();
+                    }
+                });
+            }
+            
+            // Admin Panel
+            const logoutAdminBtn = document.getElementById('logoutAdminBtn');
+            if (logoutAdminBtn) {
+                logoutAdminBtn.addEventListener('click', logoutAdmin);
+            }
+            
+            // Tabs do Admin
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const tab = this.getAttribute('data-tab');
-                    switchTab(tab);
+                btn.addEventListener('click', () => {
+                    const tabName = btn.getAttribute('data-tab');
+                    switchTab(tabName);
                 });
             });
             
-            // Login admin
-            document.getElementById('loginAdminBtn').addEventListener('click', adminLogin);
+            // Formulários do Admin
+            const addProductForm = document.getElementById('addProductForm');
+            const pixConfigForm = document.getElementById('pixConfigForm');
             
-            // Formulários admin
-            document.getElementById('addProductForm').addEventListener('submit', addNewProduct);
-            document.getElementById('pixConfigForm').addEventListener('submit', savePixConfigForm);
+            if (addProductForm) {
+                addProductForm.addEventListener('submit', addProduct);
+            }
             
-            // Fechar modal de pagamento
-            document.getElementById('closePaymentBtn').addEventListener('click', function() {
-                document.getElementById('paymentModal').classList.remove('active');
+            if (pixConfigForm) {
+                pixConfigForm.addEventListener('submit', savePixConfig);
+            }
+            
+            // Fechar modais ao clicar fora
+            document.querySelectorAll('.modal, .login-modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
             });
             
-            // Permitir login admin com Enter
-            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') adminLogin();
+            // Navegação suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
             });
-            
-            console.log("✅ Eventos configurados!");
         }
     </script>
 </body>
