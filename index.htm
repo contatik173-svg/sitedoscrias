@@ -583,6 +583,41 @@
             margin-bottom: 1rem;
         }
 
+        /* Notificação Online */
+        .online-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .online-status.offline {
+            background: var(--danger);
+        }
+
+        .online-status .pulse {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .header {
@@ -617,12 +652,24 @@
             .upload-options {
                 flex-direction: column;
             }
+            
+            .online-status {
+                bottom: 10px;
+                right: 10px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Animações de Fundo -->
     <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Status Online -->
+    <div class="online-status" id="onlineStatus">
+        <div class="pulse"></div>
+        <span>Sistema Online</span>
+    </div>
 
     <!-- Header -->
     <header class="header">
@@ -840,7 +887,7 @@
         </div>
     </div>
 
-    <!-- Modal do Painel Administrativo (OCULTO) -->
+    <!-- Modal do Painel Administrativo -->
     <div class="admin-modal" id="adminModal">
         <div class="admin-content">
             <div class="admin-header">
@@ -1081,6 +1128,8 @@
         // =================== INICIALIZAÇÃO ===================
         
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("🚀 Sistema inicializando...");
+            
             // Atualizar ano no footer
             document.getElementById('currentYear').textContent = new Date().getFullYear();
             
@@ -1101,6 +1150,8 @@
             
             // Adicionar atalho secreto para o painel admin
             setupAdminShortcut();
+            
+            console.log("✅ Sistema carregado com sucesso!");
         });
         
         // =================== SISTEMA DE UPLOAD DE IMAGEM ===================
@@ -1200,17 +1251,24 @@
         function loadUsers() {
             const saved = localStorage.getItem('storeUsers');
             window.users = saved ? JSON.parse(saved) : [];
+            console.log("📋 Usuários carregados:", window.users.length);
         }
         
         function saveUsers() {
             localStorage.setItem('storeUsers', JSON.stringify(window.users));
+            console.log("💾 Usuários salvos");
         }
         
         function checkUserLogin() {
             const loggedUser = localStorage.getItem('currentUser');
             if (loggedUser) {
-                currentUser = JSON.parse(loggedUser);
-                updateUserInterface();
+                try {
+                    currentUser = JSON.parse(loggedUser);
+                    updateUserInterface();
+                    console.log("👤 Usuário logado:", currentUser.name);
+                } catch (e) {
+                    console.error("Erro ao carregar usuário:", e);
+                }
             }
         }
         
@@ -1298,7 +1356,13 @@
         function loadProducts() {
             const saved = localStorage.getItem('storeProducts');
             if (saved) {
-                window.products = JSON.parse(saved);
+                try {
+                    window.products = JSON.parse(saved);
+                    console.log("🛒 Produtos carregados:", window.products.length);
+                } catch (e) {
+                    console.error("Erro ao carregar produtos:", e);
+                    window.products = initialProducts.slice();
+                }
             } else {
                 window.products = initialProducts.slice();
                 saveProducts();
@@ -1307,31 +1371,43 @@
         
         function saveProducts() {
             localStorage.setItem('storeProducts', JSON.stringify(window.products));
+            console.log("💾 Produtos salvos");
         }
         
         function loadPixConfig() {
             const saved = localStorage.getItem('storePixConfig');
             if (saved) {
-                pixConfig = JSON.parse(saved);
-                updatePixDisplay();
+                try {
+                    pixConfig = JSON.parse(saved);
+                    updatePixDisplay();
+                    console.log("💰 Config PIX carregada");
+                } catch (e) {
+                    console.error("Erro ao carregar PIX:", e);
+                }
             }
         }
         
         function savePixConfig() {
             localStorage.setItem('storePixConfig', JSON.stringify(pixConfig));
+            console.log("💾 PIX configurado");
         }
         
         function loadCustomers() {
             const saved = localStorage.getItem('storeCustomers');
             window.customers = saved ? JSON.parse(saved) : [];
+            console.log("👥 Clientes carregados:", window.customers.length);
         }
         
         function saveCustomers() {
             localStorage.setItem('storeCustomers', JSON.stringify(window.customers));
+            console.log("💾 Pedidos salvos");
         }
         
         function displayProducts() {
-            if (!window.products) return;
+            if (!window.products || window.products.length === 0) {
+                console.log("⚠️ Nenhum produto para exibir");
+                return;
+            }
             
             const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = '';
@@ -1339,15 +1415,17 @@
             window.products.forEach(function(product) {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.innerHTML = '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
-                    '<div class="product-info">' +
-                    '<h3 class="product-title">' + product.name + '</h3>' +
-                    '<span class="product-game">' + product.game + '</span>' +
-                    '<div class="product-price">R$ ' + product.price.toFixed(2) + '</div>' +
-                    '<button class="buy-btn" onclick="startPayment(' + product.id + ')">' +
-                    '<i class="fas fa-qrcode"></i> Comprar com PIX' +
-                    '</button>' +
-                    '</div>';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/300x200/8a2be2/ffffff?text=Imagem+Indisponível'">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <span class="product-game">${product.game}</span>
+                        <div class="product-price">R$ ${product.price.toFixed(2)}</div>
+                        <button class="buy-btn" onclick="startPayment(${product.id})">
+                            <i class="fas fa-qrcode"></i> Comprar com PIX
+                        </button>
+                    </div>
+                `;
                 productsGrid.appendChild(card);
             });
         }
@@ -1364,15 +1442,19 @@
             window.products.forEach(function(product) {
                 const item = document.createElement('div');
                 item.style.cssText = 'padding: 1rem; margin-bottom: 1rem; background: rgba(40, 40, 40, 0.9); border-radius: 8px; border-left: 4px solid var(--purple-accent);';
-                item.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center;">' +
-                    '<div>' +
-                    '<strong>' + product.name + '</strong>' +
-                    '<div style="color: var(--text-gray); font-size: 0.9rem;">' + product.game + ' - R$ ' + product.price.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '<button onclick="deleteProduct(' + product.id + ')" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">' +
-                    '<i class="fas fa-trash"></i>' +
-                    '</button>' +
-                    '</div>';
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${product.name}</strong>
+                            <div style="color: var(--text-gray); font-size: 0.9rem;">
+                                ${product.game} - R$ ${product.price.toFixed(2)}
+                            </div>
+                        </div>
+                        <button onclick="deleteProduct(${product.id})" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
                 list.appendChild(item);
             });
         }
@@ -1392,13 +1474,15 @@
                 const statusClass = customer.status === 'paid' ? 'status-paid' : 'status-pending';
                 const statusText = customer.status === 'paid' ? 'PAGO' : 'PENDENTE';
                 
-                row.innerHTML = '<td>' + date + '</td>' +
-                    '<td>' + customer.customerName + '</td>' +
-                    '<td>' + customer.customerEmail + '</td>' +
-                    '<td>' + customer.productName + '</td>' +
-                    '<td>R$ ' + customer.amount.toFixed(2) + '</td>' +
-                    '<td class="' + statusClass + '">' + statusText + '</td>' +
-                    '<td>' + customer.gameId + '</td>';
+                row.innerHTML = `
+                    <td>${date}</td>
+                    <td>${customer.customerName}</td>
+                    <td>${customer.customerEmail}</td>
+                    <td>${customer.productName}</td>
+                    <td>R$ ${customer.amount.toFixed(2)}</td>
+                    <td class="${statusClass}">${statusText}</td>
+                    <td>${customer.gameId}</td>
+                `;
                 tbody.appendChild(row);
             });
         }
@@ -1422,7 +1506,10 @@
             }
             
             const product = window.products.find(p => p.id === productId);
-            if (!product) return;
+            if (!product) {
+                alert('Produto não encontrado!');
+                return;
+            }
             
             currentProduct = product;
             
@@ -1447,9 +1534,16 @@
         }
         
         function copyPixKey() {
+            if (!pixConfig) {
+                alert('PIX não configurado!');
+                return;
+            }
+            
             const key = pixConfig.key;
             navigator.clipboard.writeText(key).then(() => {
-                alert('Chave PIX copiada para a área de transferência!');
+                alert('✅ Chave PIX copiada para a área de transferência!');
+            }).catch(err => {
+                alert('❌ Erro ao copiar: ' + err);
             });
         }
         
@@ -1482,7 +1576,7 @@
             document.getElementById('paymentModal').classList.remove('active');
             
             // Mostrar instruções
-            alert('✅ PEDIDO REGISTRADO!\n\nOlá ' + currentUser.name + ',\n\nPague R$ ' + currentProduct.price.toFixed(2) + ' via PIX para:\n\n' + pixConfig.key + '\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ' + currentUser.email);
+            alert(`✅ PEDIDO REGISTRADO!\n\nOlá ${currentUser.name},\n\nPague R$ ${currentProduct.price.toFixed(2)} via PIX para:\n\n${pixConfig.key}\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ${currentUser.email}`);
             
             // Atualizar lista de clientes no admin
             if (isAdminLoggedIn) {
@@ -1493,7 +1587,7 @@
             currentProduct = null;
         }
         
-        // =================== PAINEL ADMINISTRATIVO OCULTO ===================
+        // =================== PAINEL ADMINISTRATIVO ===================
         
         function setupAdminShortcut() {
             // Atalho secreto: Ctrl + Alt + A
@@ -1570,8 +1664,9 @@
                 displayCustomers();
                 // Configurar upload de imagem
                 setupImageUpload();
+                alert('✅ Acesso admin concedido!');
             } else {
-                alert('Senha incorreta!');
+                alert('❌ Senha incorreta!');
             }
         }
         
@@ -1610,7 +1705,7 @@
             document.getElementById('addProductForm').reset();
             clearImage();
             
-            alert('Produto adicionado com sucesso!');
+            alert('✅ Produto adicionado com sucesso!');
         }
         
         function deleteProduct(productId) {
@@ -1621,7 +1716,7 @@
             displayProducts();
             displayAdminProducts();
             
-            alert('Produto excluído!');
+            alert('✅ Produto excluído!');
         }
         
         function savePixConfigForm(e) {
@@ -1641,10 +1736,12 @@
             savePixConfig();
             updatePixDisplay();
             
-            alert('Configurações PIX salvas com sucesso!');
+            alert('✅ Configurações PIX salvas com sucesso!');
         }
         
         function setupEventListeners() {
+            console.log("⚡ Configurando eventos...");
+            
             // Botão de usuário
             document.getElementById('userBtn').addEventListener('click', function() {
                 if (currentUser) {
@@ -1755,6 +1852,8 @@
             document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') adminLogin();
             });
+            
+            console.log("✅ Eventos configurados!");
         }
     </script>
 </body>
