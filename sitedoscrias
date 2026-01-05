@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameCards BR | Gift Cards Free Fire & Roblox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --black-primary: #0a0a0a;
+            --black-dark: #121212;
+            --purple-primary: #8a2be2;
+            --purple-accent: #9b30ff;
+            --purple-light: #b57edc;
+            --text-light: #ffffff;
+            --text-gray: #cccccc;
+            --success: #00ff7f;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --pix-green: #00a859;
+        }
+
+        body {
+            background-color: var(--black-primary);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animações de Fundo */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bg-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--purple-accent) 0%, transparent 70%);
+            opacity: 0.08;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -40px) rotate(90deg); }
+            50% { transform: translate(0, -60px) rotate(180deg); }
+            75% { transform: translate(-20px, -40px) rotate(270deg); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--purple-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            color: var(--purple-accent);
+            font-size: 2.2rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(90deg, var(--purple-light), var(--purple-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+            background: rgba(139, 0, 255, 0.1);
+        }
+
+        .admin-btn {
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            color: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 255, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--purple-light), var(--purple-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Products */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 0, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-accent);
+            box-shadow: 0 15px 30px rgba(139, 0, 255, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(139, 0, 255, 0.3);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-game {
+            display: inline-block;
+            background: rgba(139, 0, 255, 0.2);
+            color: var(--purple-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 2rem;
+            color: var(--purple-accent);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(45deg, var(--purple-accent), var(--purple-light));
+        }
+
+        /* Modal de Pagamento PIX */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: rgba(20, 20, 20, 0.95);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            border: 2px solid var(--purple-primary);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-payment {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .pix-title {
+            text-align: center;
+            color: var(--pix-green);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .pix-qrcode {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pix-key {
+            background: rgba(0, 168, 89, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            word-break: break-all;
+            font-family: monospace;
+        }
+
+        .payment-info {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(139, 0, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Modal Admin */
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-modal.active {
+            display: flex;
+        }
+
+        .admin-content {
+            background: rgba(20, 20, 20, 0.98);
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 15px;
+            border: 2px solid var(--purple-primary);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .admin-header {
+            background: linear-gradient(90deg, var(--purple-primary), var(--purple-accent));
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .admin-tabs {
+            display: flex;
+            background: rgba(30, 30, 30, 0.9);
+            border-bottom: 2px solid var(--purple-primary);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(40, 40, 40, 0.9);
+            border: 1px solid rgba(139, 0, 255, 0.5);
+            border-radius: 8px;
+            color: var(--text-light);
+        }
+
+        .btn-save {
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* Tabela de Clientes */
+        .customers-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .customers-table th,
+        .customers-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 0, 255, 0.2);
+        }
+
+        .customers-table th {
+            background: rgba(139, 0, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .status-paid {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .status-pending {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+            border-top: 2px solid var(--purple-primary);
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-content {
+                width: 95%;
+                margin: 1rem;
+            }
+            
+            .customers-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animações de Fundo -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-gamepad logo-icon"></i>
+            <span class="logo-text">GameCards BR</span>
+        </div>
+        
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#products">Produtos</a></li>
+                <li><a href="#support">Suporte</a></li>
+                <!-- Botão Admin REMOVIDO -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1 class="hero-title">Gift Cards Free Fire & Roblox</h1>
+            <p class="hero-subtitle">Compre com segurança via PIX e receba instantaneamente. Melhores preços do mercado!</p>
+        </section>
+
+        <!-- Produtos -->
+        <section id="products">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--purple-light);">
+                Nossos Gift Cards
+            </h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Produtos carregados via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Como Funciona -->
+        <section style="margin-top: 5rem; background: rgba(30, 30, 30, 0.7); padding: 3rem; border-radius: 15px;">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: var(--purple-light);">
+                Como Comprar
+            </h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--purple-accent); margin-bottom: 1rem;">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem;">1. Escolha o Gift Card</h3>
+                    <p style="color: var(--text-gray);">Selecione o valor desejado</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--pix-green); margin-bottom: 1rem;">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem;">2. Pague via PIX</h3>
+                    <p style="color: var(--text-gray);">Escaneie o QR Code ou copie a chave</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--purple-accent); margin-bottom: 1rem;">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem;">3. Receba Instantâneo</h3>
+                    <p style="color: var(--text-gray);">Código chega em segundos no seu e-mail</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="support">
+        <div class="footer-logo">
+            <i class="fas fa-gamepad"></i>
+            <span style="color: var(--purple-accent);">GameCards</span> BR
+        </div>
+        <p style="color: var(--text-gray); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Sua loja confiável de gift cards para Free Fire e Roblox. Atendimento 24/7.
+        </p>
+        <p style="color: #888; font-size: 0.9rem;">
+            &copy; 2024 GameCards BR. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <!-- Modal de Pagamento PIX -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <button class="close-payment" id="closePaymentBtn">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h2 class="pix-title">
+                <i class="fas fa-qrcode"></i> Pagamento via PIX
+            </h2>
+            
+            <div class="payment-info">
+                <h3 id="paymentProductName"></h3>
+                <p style="margin-top: 0.5rem;">Valor: <strong id="paymentAmount" style="color: var(--purple-accent); font-size: 1.5rem;"></strong></p>
+            </div>
+            
+            <div class="pix-qrcode" id="pixQrCode">
+                <!-- QR Code será gerado aqui -->
+                <div style="color: black; padding: 1rem; font-weight: bold;">
+                    QR CODE PIX<br>
+                    (Sistema em Funcionamento)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Chave PIX para Copiar:</label>
+                <div class="pix-key" id="pixKeyDisplay">
+                    Carregando...
+                </div>
+                <button class="btn-save" onclick="copyPixKey()" style="width: 100%;">
+                    <i class="fas fa-copy"></i> Copiar Chave PIX
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <h3 style="margin-bottom: 1rem;">Informações do Pedido</h3>
+                <form id="customerForm">
+                    <div class="form-group">
+                        <label class="form-label">Seu Nome:</label>
+                        <input type="text" class="form-input" id="customerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">E-mail:</label>
+                        <input type="email" class="form-input" id="customerEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Seu ID no Jogo:</label>
+                        <input type="text" class="form-input" id="customerGameId" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-save" style="width: 100%;">
+                        <i class="fas fa-check-circle"></i> Confirmar Pedido
+                    </button>
+                </form>
+            </div>
+            
+            <p style="color: var(--text-gray); text-align: center; margin-top: 1rem; font-size: 0.9rem;">
+                Após o pagamento, o código será enviado para seu e-mail em até 5 minutos.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal do Painel Administrativo (OCULTO) -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2 class="admin-title">
+                    <i class="fas fa-user-shield"></i> Painel Administrativo
+                </h2>
+                <button class="admin-btn" id="closeAdminBtn">
+                    <i class="fas fa-times"></i> Fechar
+                </button>
+            </div>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="login">Acesso</button>
+                <button class="tab-btn" data-tab="products">Produtos</button>
+                <button class="tab-btn" data-tab="customers">Clientes</button>
+                <button class="tab-btn" data-tab="pix">Configurar PIX</button>
+            </div>
+            
+            <!-- Tab: Login -->
+            <div class="tab-content active" id="loginTab">
+                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Acesso Administrativo</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Senha de Administrador:</label>
+                    <input type="password" class="form-input" id="adminPassword" placeholder="Digite a senha">
+                </div>
+                
+                <button class="btn-save" id="loginAdminBtn">
+                    <i class="fas fa-sign-in-alt"></i> Acessar Painel
+                </button>
+            </div>
+            
+            <!-- Tab: Produtos -->
+            <div class="tab-content" id="productsTab">
+                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Gerenciar Produtos</h3>
+                
+                <div class="form-group">
+                    <h4 style="margin-bottom: 1rem;">Adicionar Novo Produto</h4>
+                    <form id="addProductForm">
+                        <div class="form-group">
+                            <label class="form-label">Nome do Produto:</label>
+                            <input type="text" class="form-input" id="productName" placeholder="Ex: Gift Card Free Fire 1000 Diamantes" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Jogo:</label>
+                            <select class="form-input" id="productGame" required>
+                                <option value="">Selecione</option>
+                                <option value="Free Fire">Free Fire</option>
+                                <option value="Roblox">Roblox</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Preço (R$):</label>
+                            <input type="number" class="form-input" id="productPrice" step="0.01" min="1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">URL da Imagem:</label>
+                            <input type="url" class="form-input" id="productImage" placeholder="https://exemplo.com/imagem.jpg" required>
+                            <small style="color: var(--text-gray); display: block; margin-top: 0.5rem;">
+                                Exemplos:<br>
+                                Free Fire: https://i.imgur.com/4Qp6Q8s.png<br>
+                                Roblox: https://i.imgur.com/Vv7Q2ZL.png
+                            </small>
+                        </div>
+                        
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-plus"></i> Adicionar Produto
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="form-group">
+                    <h4 style="margin-bottom: 1rem;">Produtos Cadastrados</h4>
+                    <div id="adminProductsList" style="background: rgba(30, 30, 30, 0.9); padding: 1rem; border-radius: 8px; max-height: 300px; overflow-y: auto;">
+                        <!-- Lista de produtos -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab: Clientes -->
+            <div class="tab-content" id="customersTab">
+                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Clientes e Pedidos</h3>
+                
+                <div id="customersList">
+                    <table class="customers-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Cliente</th>
+                                <th>Produto</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>ID do Jogo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                            <!-- Dados dos clientes -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Tab: Configurar PIX -->
+            <div class="tab-content" id="pixTab">
+                <h3 style="margin-bottom: 2rem; color: var(--purple-light);">Configuração da Chave PIX</h3>
+                
+                <div class="form-group">
+                    <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
+                        Configure sua chave PIX para receber os pagamentos dos clientes.
+                    </p>
+                    
+                    <form id="pixConfigForm">
+                        <div class="form-group">
+                            <label class="form-label">Tipo de Chave PIX:</label>
+                            <select class="form-input" id="pixType" required>
+                                <option value="cpf">CPF</option>
+                                <option value="cnpj">CNPJ</option>
+                                <option value="email">E-mail</option>
+                                <option value="phone">Telefone</option>
+                                <option value="random">Chave Aleatória</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Sua Chave PIX:</label>
+                            <input type="text" class="form-input" id="pixKey" placeholder="Digite sua chave PIX" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Nome do Titular:</label>
+                            <input type="text" class="form-input" id="pixName" placeholder="Nome registrado no PIX" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Cidade:</label>
+                            <input type="text" class="form-input" id="pixCity" placeholder="Cidade do titular" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-save">
+                            <i class="fas fa-save"></i> Salvar Configurações PIX
+                        </button>
+                    </form>
+                    
+                    <div id="currentPixConfig" style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 168, 89, 0.1); border-radius: 8px; display: none;">
+                        <h4 style="color: var(--pix-green); margin-bottom: 1rem;">
+                            <i class="fas fa-check-circle"></i> Chave PIX Configurada
+                        </h4>
+                        <p><strong>Chave:</strong> <span id="currentPixKey"></span></p>
+                        <p><strong>Titular:</strong> <span id="currentPixName"></span></p>
+                        <p><strong>Cidade:</strong> <span id="currentPixCity"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================== SISTEMA COMPLETO ===================
+        
+        // Configurações iniciais
+        const ADMIN_PASSWORD = "171";
+        let currentProduct = null;
+        let isAdminLoggedIn = false;
+        let pixConfig = null;
+        
+        // Produtos iniciais
+        const initialProducts = [
+            {
+                id: 1,
+                name: "Free Fire - 1000 Diamantes",
+                game: "Free Fire",
+                price: 29.90,
+                image: "https://i.imgur.com/4Qp6Q8s.png"
+            },
+            {
+                id: 2,
+                name: "Roblox - 400 Robux",
+                game: "Roblox",
+                price: 19.90,
+                image: "https://i.imgur.com/Vv7Q2ZL.png"
+            },
+            {
+                id: 3,
+                name: "Free Fire - 2000 Diamantes",
+                game: "Free Fire",
+                price: 59.90,
+                image: "https://i.imgur.com/4Qp6Q8s.png"
+            },
+            {
+                id: 4,
+                name: "Roblox - 800 Robux",
+                game: "Roblox",
+                price: 39.90,
+                image: "https://i.imgur.com/Vv7Q2ZL.png"
+            }
+        ];
+        
+        // =================== INICIALIZAÇÃO ===================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Criar animações de fundo
+            createBackgroundAnimation();
+            
+            // Carregar dados
+            loadProducts();
+            loadPixConfig();
+            loadCustomers();
+            
+            // Exibir produtos
+            displayProducts();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            
+            // Adicionar atalho secreto para o painel admin
+            setupAdminShortcut();
+        });
+        
+        // =================== FUNÇÕES PRINCIPAIS ===================
+        
+        function createBackgroundAnimation() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'bg-particle';
+                particle.style.width = `${Math.random() * 200 + 50}px`;
+                particle.style.height = particle.style.width;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                bgAnimation.appendChild(particle);
+            }
+        }
+        
+        function loadProducts() {
+            const saved = localStorage.getItem('storeProducts');
+            if (saved) {
+                window.products = JSON.parse(saved);
+            } else {
+                window.products = [...initialProducts];
+                saveProducts();
+            }
+        }
+        
+        function saveProducts() {
+            localStorage.setItem('storeProducts', JSON.stringify(window.products));
+        }
+        
+        function loadPixConfig() {
+            const saved = localStorage.getItem('storePixConfig');
+            if (saved) {
+                pixConfig = JSON.parse(saved);
+                updatePixDisplay();
+            }
+        }
+        
+        function savePixConfig() {
+            localStorage.setItem('storePixConfig', JSON.stringify(pixConfig));
+        }
+        
+        function loadCustomers() {
+            const saved = localStorage.getItem('storeCustomers');
+            window.customers = saved ? JSON.parse(saved) : [];
+        }
+        
+        function saveCustomers() {
+            localStorage.setItem('storeCustomers', JSON.stringify(window.customers));
+        }
+        
+        function displayProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+            
+            window.products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <span class="product-game">${product.game}</span>
+                        <div class="product-price">R$ ${product.price.toFixed(2)}</div>
+                        <button class="buy-btn" onclick="startPayment(${product.id})">
+                            <i class="fas fa-qrcode"></i> Comprar com PIX
+                        </button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+        }
+        
+        function displayAdminProducts() {
+            const list = document.getElementById('adminProductsList');
+            list.innerHTML = '';
+            
+            if (window.products.length === 0) {
+                list.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Nenhum produto cadastrado.</p>';
+                return;
+            }
+            
+            window.products.forEach(product => {
+                const item = document.createElement('div');
+                item.style.cssText = `
+                    padding: 1rem;
+                    margin-bottom: 1rem;
+                    background: rgba(40, 40, 40, 0.9);
+                    border-radius: 8px;
+                    border-left: 4px solid var(--purple-accent);
+                `;
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${product.name}</strong>
+                            <div style="color: var(--text-gray); font-size: 0.9rem;">${product.game} - R$ ${product.price.toFixed(2)}</div>
+                        </div>
+                        <button onclick="deleteProduct(${product.id})" style="
+                            background: var(--danger);
+                            color: white;
+                            border: none;
+                            padding: 0.5rem 1rem;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        ">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+        
+        function displayCustomers() {
+            const tbody = document.getElementById('customersTableBody');
+            tbody.innerHTML = '';
+            
+            if (window.customers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                            Nenhum pedido registrado ainda.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            window.customers.forEach(customer => {
+                const row = document.createElement('tr');
+                const date = new Date(customer.date).toLocaleString('pt-BR');
+                const statusClass = customer.status === 'paid' ? 'status-paid' : 'status-pending';
+                const statusText = customer.status === 'paid' ? 'PAGO' : 'PENDENTE';
+                
+                row.innerHTML = `
+                    <td>${date}</td>
+                    <td>${customer.name}<br><small>${customer.email}</small></td>
+                    <td>${customer.productName}</td>
+                    <td>R$ ${customer.amount.toFixed(2)}</td>
+                    <td class="${statusClass}">${statusText}</td>
+                    <td>${customer.gameId}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updatePixDisplay() {
+            if (pixConfig) {
+                document.getElementById('currentPixConfig').style.display = 'block';
+                document.getElementById('currentPixKey').textContent = pixConfig.key;
+                document.getElementById('currentPixName').textContent = pixConfig.name;
+                document.getElementById('currentPixCity').textContent = pixConfig.city;
+            }
+        }
+        
+        // =================== SISTEMA DE PAGAMENTO ===================
+        
+        function startPayment(productId) {
+            const product = window.products.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProduct = product;
+            
+            // Verificar se tem PIX configurado
+            if (!pixConfig) {
+                alert('⚠️ Sistema PIX não configurado. Configure no painel admin primeiro.');
+                openAdminModal();
+                switchTab('pix');
+                return;
+            }
+            
+            // Atualizar modal de pagamento
+            document.getElementById('paymentProductName').textContent = product.name;
+            document.getElementById('paymentAmount').textContent = `R$ ${product.price.toFixed(2)}`;
+            document.getElementById('pixKeyDisplay').textContent = pixConfig.key;
+            
+            // Resetar formulário
+            document.getElementById('customerForm').reset();
+            
+            // Abrir modal
+            document.getElementById('paymentModal').classList.add('active');
+        }
+        
+        function copyPixKey() {
+            const key = pixConfig.key;
+            navigator.clipboard.writeText(key).then(() => {
+                alert('Chave PIX copiada para a área de transferência!');
+            });
+        }
+        
+        // =================== PAINEL ADMINISTRATIVO OCULTO ===================
+        
+        function setupAdminShortcut() {
+            // Atalho secreto: Ctrl + Alt + A
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.altKey && e.key === 'a') {
+                    e.preventDefault();
+                    openAdminModal();
+                }
+            });
+            
+            // Também adicionar clique triplo no logo
+            let clickCount = 0;
+            let clickTimer;
+            
+            document.querySelector('.logo').addEventListener('click', function() {
+                clickCount++;
+                if (clickCount === 3) {
+                    clearTimeout(clickTimer);
+                    clickCount = 0;
+                    openAdminModal();
+                } else {
+                    clearTimeout(clickTimer);
+                    clickTimer = setTimeout(function() {
+                        clickCount = 0;
+                    }, 500);
+                }
+            });
+        }
+        
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.add('active');
+            if (!isAdminLoggedIn) {
+                showTab('login');
+            } else {
+                showTab('products');
+                displayAdminProducts();
+                displayCustomers();
+            }
+        }
+        
+        function showTab(tabName) {
+            // Remover active de todas as tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Ativar tab selecionada
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+        
+        function switchTab(tabName) {
+            if (!isAdminLoggedIn && tabName !== 'login') {
+                alert('Faça login primeiro');
+                return;
+            }
+            showTab(tabName);
+        }
+        
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                document.getElementById('adminPassword').value = '';
+                showTab('products');
+                displayAdminProducts();
+                displayCustomers();
+            } else {
+                alert('Senha incorreta!');
+            }
+        }
+        
+        function addNewProduct(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('productName').value;
+            const game = document.getElementById('productGame').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const image = document.getElementById('productImage').value;
+            
+            if (!name || !game || !price || !image) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            const newProduct = {
+                id: window.products.length > 0 ? Math.max(...window.products.map(p => p.id)) + 1 : 1,
+                name,
+                game,
+                price,
+                image
+            };
+            
+            window.products.push(newProduct);
+            saveProducts();
+            displayProducts();
+            displayAdminProducts();
+            
+            // Limpar formulário
+            document.getElementById('addProductForm').reset();
+            
+            alert('Produto adicionado com sucesso!');
+        }
+        
+        function deleteProduct(productId) {
+            if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+            
+            window.products = window.products.filter(p => p.id !== productId);
+            saveProducts();
+            displayProducts();
+            displayAdminProducts();
+            
+            alert('Produto excluído!');
+        }
+        
+        function savePixConfigForm(e) {
+            e.preventDefault();
+            
+            const type = document.getElementById('pixType').value;
+            const key = document.getElementById('pixKey').value;
+            const name = document.getElementById('pixName').value;
+            const city = document.getElementById('pixCity').value;
+            
+            if (!key || !name || !city) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            pixConfig = { type, key, name, city };
+            savePixConfig();
+            updatePixDisplay();
+            
+            alert('Configurações PIX salvas com sucesso!');
+        }
+        
+        function processCustomerOrder(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('customerName').value;
+            const email = document.getElementById('customerEmail').value;
+            const gameId = document.getElementById('customerGameId').value;
+            
+            if (!name || !email || !gameId || !currentProduct) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+            
+            // Criar pedido
+            const order = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                name,
+                email,
+                gameId,
+                productName: currentProduct.name,
+                amount: currentProduct.price,
+                status: 'pending' // Inicialmente pendente
+            };
+            
+            // Adicionar aos clientes
+            window.customers.push(order);
+            saveCustomers();
+            
+            // Fechar modal
+            document.getElementById('paymentModal').classList.remove('active');
+            
+            // Mostrar instruções
+            alert(`✅ PEDIDO REGISTRADO!\n\nOlá ${name},\n\nPague R$ ${currentProduct.price.toFixed(2)} via PIX para:\n\n${pixConfig.key}\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ${email}`);
+            
+            // Atualizar lista de clientes no admin
+            if (isAdminLoggedIn) {
+                displayCustomers();
+            }
+            
+            // Resetar
+            currentProduct = null;
+        }
+        
+        function setupEventListeners() {
+            // Fechar modal admin
+            document.getElementById('closeAdminBtn').addEventListener('click', () => {
+                document.getElementById('adminModal').classList.remove('active');
+            });
+            
+            // Botões das tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tab = btn.getAttribute('data-tab');
+                    switchTab(tab);
+                });
+            });
+            
+            // Login admin
+            document.getElementById('loginAdminBtn').addEventListener('click', adminLogin);
+            
+            // Formulários
+            document.getElementById('addProductForm').addEventListener('submit', addNewProduct);
+            document.getElementById('pixConfigForm').addEventListener('submit', savePixConfigForm);
+            document.getElementById('customerForm').addEventListener('submit', processCustomerOrder);
+            
+            // Fechar modal de pagamento
+            document.getElementById('closePaymentBtn').addEventListener('click', () => {
+                document.getElementById('paymentModal').classList.remove('active');
+            });
+            
+            // Permitir login com Enter
+            document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') adminLogin();
+            });
+        }
+    </script>
+</body>
+</html>
