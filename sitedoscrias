@@ -98,6 +98,7 @@
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -114,20 +115,81 @@
             background: rgba(139, 0, 255, 0.1);
         }
 
-        .admin-btn {
+        .user-btn {
             background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
             color: white;
             border: none;
-            padding: 0.7rem 1.8rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .admin-btn:hover {
+        .user-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(139, 0, 255, 0.4);
+        }
+
+        /* Modal de Login/Cadastro */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-modal.active {
+            display: flex;
+        }
+
+        .auth-content {
+            background: rgba(20, 20, 20, 0.98);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 15px;
+            border: 2px solid var(--purple-primary);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(139, 0, 255, 0.3);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--purple-light);
+            border-bottom: 3px solid var(--purple-accent);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
         }
 
         /* Main Content */
@@ -501,13 +563,75 @@
                 <li><a href="#home">Início</a></li>
                 <li><a href="#products">Produtos</a></li>
                 <li><a href="#support">Suporte</a></li>
-                <!-- Botão Admin REMOVIDO -->
+                <li>
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user"></i> Entrar
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
 
-    <!-- Conteúdo Principal -->
-    <main class="container">
+    <!-- Modal de Login/Cadastro -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <button class="close-payment" id="closeAuthBtn">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-form="login">Entrar</button>
+                <button class="auth-tab" data-form="register">Cadastrar</button>
+            </div>
+            
+            <!-- Formulário de Login -->
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">E-mail:</label>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Senha:</label>
+                    <input type="password" class="form-input" id="loginPassword" placeholder="Sua senha" required>
+                </div>
+                
+                <button type="submit" class="btn-save" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </form>
+            
+            <!-- Formulário de Cadastro -->
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Nome Completo:</label>
+                    <input type="text" class="form-input" id="registerName" placeholder="Seu nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">E-mail:</label>
+                    <input type="email" class="form-input" id="registerEmail" placeholder="seu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Senha:</label>
+                    <input type="password" class="form-input" id="registerPassword" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirmar Senha:</label>
+                    <input type="password" class="form-input" id="registerConfirm" placeholder="Digite a senha novamente" required>
+                </div>
+                
+                <button type="submit" class="btn-save" style="width: 100%;">
+                    <i class="fas fa-user-plus"></i> Criar Conta
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal (Só aparece se estiver logado) -->
+    <main class="container" id="mainContent" style="display: none;">
         <!-- Hero Section -->
         <section class="hero" id="home">
             <h1 class="hero-title">Gift Cards Free Fire & Roblox</h1>
@@ -557,6 +681,22 @@
         </section>
     </main>
 
+    <!-- Mensagem para não logados -->
+    <div class="container" id="loginMessage" style="text-align: center; padding: 5rem 2rem;">
+        <div style="font-size: 5rem; color: var(--purple-accent); margin-bottom: 2rem;">
+            <i class="fas fa-gamepad"></i>
+        </div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--purple-light);">
+            Bem-vindo à GameCards BR!
+        </h2>
+        <p style="font-size: 1.2rem; color: var(--text-gray); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Faça login ou crie uma conta para acessar nossa loja de gift cards e fazer suas compras com segurança.
+        </p>
+        <button class="user-btn" style="font-size: 1.2rem; padding: 1rem 2.5rem;" id="loginPromptBtn">
+            <i class="fas fa-sign-in-alt"></i> Entrar ou Cadastrar
+        </button>
+    </div>
+
     <!-- Footer -->
     <footer class="footer" id="support">
         <div class="footer-logo">
@@ -567,7 +707,7 @@
             Sua loja confiável de gift cards para Free Fire e Roblox. Atendimento 24/7.
         </p>
         <p style="color: #888; font-size: 0.9rem;">
-            &copy; 2024 GameCards BR. Todos os direitos reservados.
+            &copy; <span id="currentYear"></span> GameCards BR. Todos os direitos reservados.
         </p>
     </footer>
 
@@ -588,7 +728,6 @@
             </div>
             
             <div class="pix-qrcode" id="pixQrCode">
-                <!-- QR Code será gerado aqui -->
                 <div style="color: black; padding: 1rem; font-weight: bold;">
                     QR CODE PIX<br>
                     (Sistema em Funcionamento)
@@ -606,27 +745,20 @@
             </div>
             
             <div class="form-group">
-                <h3 style="margin-bottom: 1rem;">Informações do Pedido</h3>
-                <form id="customerForm">
-                    <div class="form-group">
-                        <label class="form-label">Seu Nome:</label>
-                        <input type="text" class="form-input" id="customerName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">E-mail:</label>
-                        <input type="email" class="form-input" id="customerEmail" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Seu ID no Jogo:</label>
-                        <input type="text" class="form-input" id="customerGameId" required>
-                    </div>
-                    
-                    <button type="submit" class="btn-save" style="width: 100%;">
-                        <i class="fas fa-check-circle"></i> Confirmar Pedido
-                    </button>
-                </form>
+                <h3 style="margin-bottom: 1rem;">Confirmar Pedido</h3>
+                <p style="color: var(--text-gray); margin-bottom: 1.5rem;">
+                    Cliente: <strong id="customerInfo"></strong><br>
+                    E-mail: <strong id="customerEmailInfo"></strong>
+                </p>
+                
+                <div class="form-group">
+                    <label class="form-label">Seu ID no Jogo:</label>
+                    <input type="text" class="form-input" id="customerGameId" placeholder="Ex: 123456789" required>
+                </div>
+                
+                <button class="btn-save" onclick="confirmOrder()" style="width: 100%;">
+                    <i class="fas fa-check-circle"></i> Confirmar Pedido
+                </button>
             </div>
             
             <p style="color: var(--text-gray); text-align: center; margin-top: 1rem; font-size: 0.9rem;">
@@ -642,7 +774,7 @@
                 <h2 class="admin-title">
                     <i class="fas fa-user-shield"></i> Painel Administrativo
                 </h2>
-                <button class="admin-btn" id="closeAdminBtn">
+                <button class="user-btn" id="closeAdminBtn">
                     <i class="fas fa-times"></i> Fechar
                 </button>
             </div>
@@ -712,9 +844,7 @@
                 
                 <div class="form-group">
                     <h4 style="margin-bottom: 1rem;">Produtos Cadastrados</h4>
-                    <div id="adminProductsList" style="background: rgba(30, 30, 30, 0.9); padding: 1rem; border-radius: 8px; max-height: 300px; overflow-y: auto;">
-                        <!-- Lista de produtos -->
-                    </div>
+                    <div id="adminProductsList" style="background: rgba(30, 30, 30, 0.9); padding: 1rem; border-radius: 8px; max-height: 300px; overflow-y: auto;"></div>
                 </div>
             </div>
             
@@ -728,15 +858,14 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Cliente</th>
+                                <th>E-mail</th>
                                 <th>Produto</th>
                                 <th>Valor</th>
                                 <th>Status</th>
                                 <th>ID do Jogo</th>
                             </tr>
                         </thead>
-                        <tbody id="customersTableBody">
-                            <!-- Dados dos clientes -->
-                        </tbody>
+                        <tbody id="customersTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -803,6 +932,7 @@
         let currentProduct = null;
         let isAdminLoggedIn = false;
         let pixConfig = null;
+        let currentUser = null;
         
         // Produtos iniciais
         const initialProducts = [
@@ -839,6 +969,9 @@
         // =================== INICIALIZAÇÃO ===================
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Atualizar ano no footer
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
             // Criar animações de fundo
             createBackgroundAnimation();
             
@@ -846,9 +979,10 @@
             loadProducts();
             loadPixConfig();
             loadCustomers();
+            loadUsers();
             
-            // Exibir produtos
-            displayProducts();
+            // Verificar se usuário está logado
+            checkUserLogin();
             
             // Configurar event listeners
             setupEventListeners();
@@ -857,6 +991,90 @@
             setupAdminShortcut();
         });
         
+        // =================== SISTEMA DE USUÁRIOS ===================
+        
+        function loadUsers() {
+            const saved = localStorage.getItem('storeUsers');
+            window.users = saved ? JSON.parse(saved) : [];
+        }
+        
+        function saveUsers() {
+            localStorage.setItem('storeUsers', JSON.stringify(window.users));
+        }
+        
+        function checkUserLogin() {
+            const loggedUser = localStorage.getItem('currentUser');
+            if (loggedUser) {
+                currentUser = JSON.parse(loggedUser);
+                updateUserInterface();
+            }
+        }
+        
+        function updateUserInterface() {
+            const mainContent = document.getElementById('mainContent');
+            const loginMessage = document.getElementById('loginMessage');
+            const userBtn = document.getElementById('userBtn');
+            
+            if (currentUser) {
+                // Usuário logado
+                mainContent.style.display = 'block';
+                loginMessage.style.display = 'none';
+                userBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.name.split(' ')[0]}`;
+                displayProducts();
+            } else {
+                // Usuário não logado
+                mainContent.style.display = 'none';
+                loginMessage.style.display = 'block';
+                userBtn.innerHTML = `<i class="fas fa-user"></i> Entrar`;
+            }
+        }
+        
+        function userLogin(email, password) {
+            const user = window.users.find(u => u.email === email && u.password === password);
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateUserInterface();
+                document.getElementById('authModal').classList.remove('active');
+                alert(`Bem-vindo de volta, ${user.name}!`);
+                return true;
+            }
+            return false;
+        }
+        
+        function userRegister(name, email, password) {
+            // Verificar se email já existe
+            if (window.users.some(u => u.email === email)) {
+                return { success: false, message: 'Este e-mail já está cadastrado!' };
+            }
+            
+            // Criar novo usuário
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+            window.users.push(newUser);
+            saveUsers();
+            
+            // Logar automaticamente
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            updateUserInterface();
+            
+            return { success: true, message: 'Conta criada com sucesso!' };
+        }
+        
+        function userLogout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserInterface();
+            alert('Você saiu da sua conta.');
+        }
+        
         // =================== FUNÇÕES PRINCIPAIS ===================
         
         function createBackgroundAnimation() {
@@ -864,11 +1082,11 @@
             for (let i = 0; i < 10; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'bg-particle';
-                particle.style.width = `${Math.random() * 200 + 50}px`;
+                particle.style.width = Math.random() * 200 + 50 + 'px';
                 particle.style.height = particle.style.width;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
                 bgAnimation.appendChild(particle);
             }
         }
@@ -878,7 +1096,7 @@
             if (saved) {
                 window.products = JSON.parse(saved);
             } else {
-                window.products = [...initialProducts];
+                window.products = initialProducts.slice();
                 saveProducts();
             }
         }
@@ -909,23 +1127,23 @@
         }
         
         function displayProducts() {
+            if (!window.products) return;
+            
             const productsGrid = document.getElementById('productsGrid');
             productsGrid.innerHTML = '';
             
-            window.products.forEach(product => {
+            window.products.forEach(function(product) {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-info">
-                        <h3 class="product-title">${product.name}</h3>
-                        <span class="product-game">${product.game}</span>
-                        <div class="product-price">R$ ${product.price.toFixed(2)}</div>
-                        <button class="buy-btn" onclick="startPayment(${product.id})">
-                            <i class="fas fa-qrcode"></i> Comprar com PIX
-                        </button>
-                    </div>
-                `;
+                card.innerHTML = '<img src="' + product.image + '" alt="' + product.name + '" class="product-image">' +
+                    '<div class="product-info">' +
+                    '<h3 class="product-title">' + product.name + '</h3>' +
+                    '<span class="product-game">' + product.game + '</span>' +
+                    '<div class="product-price">R$ ' + product.price.toFixed(2) + '</div>' +
+                    '<button class="buy-btn" onclick="startPayment(' + product.id + ')">' +
+                    '<i class="fas fa-qrcode"></i> Comprar com PIX' +
+                    '</button>' +
+                    '</div>';
                 productsGrid.appendChild(card);
             });
         }
@@ -934,38 +1152,23 @@
             const list = document.getElementById('adminProductsList');
             list.innerHTML = '';
             
-            if (window.products.length === 0) {
+            if (!window.products || window.products.length === 0) {
                 list.innerHTML = '<p style="color: var(--text-gray); text-align: center;">Nenhum produto cadastrado.</p>';
                 return;
             }
             
-            window.products.forEach(product => {
+            window.products.forEach(function(product) {
                 const item = document.createElement('div');
-                item.style.cssText = `
-                    padding: 1rem;
-                    margin-bottom: 1rem;
-                    background: rgba(40, 40, 40, 0.9);
-                    border-radius: 8px;
-                    border-left: 4px solid var(--purple-accent);
-                `;
-                item.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <strong>${product.name}</strong>
-                            <div style="color: var(--text-gray); font-size: 0.9rem;">${product.game} - R$ ${product.price.toFixed(2)}</div>
-                        </div>
-                        <button onclick="deleteProduct(${product.id})" style="
-                            background: var(--danger);
-                            color: white;
-                            border: none;
-                            padding: 0.5rem 1rem;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        ">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
+                item.style.cssText = 'padding: 1rem; margin-bottom: 1rem; background: rgba(40, 40, 40, 0.9); border-radius: 8px; border-left: 4px solid var(--purple-accent);';
+                item.innerHTML = '<div style="display: flex; justify-content: space-between; align-items: center;">' +
+                    '<div>' +
+                    '<strong>' + product.name + '</strong>' +
+                    '<div style="color: var(--text-gray); font-size: 0.9rem;">' + product.game + ' - R$ ' + product.price.toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<button onclick="deleteProduct(' + product.id + ')" style="background: var(--danger); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">' +
+                    '<i class="fas fa-trash"></i>' +
+                    '</button>' +
+                    '</div>';
                 list.appendChild(item);
             });
         }
@@ -974,31 +1177,24 @@
             const tbody = document.getElementById('customersTableBody');
             tbody.innerHTML = '';
             
-            if (window.customers.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="6" style="text-align: center; color: var(--text-gray); padding: 2rem;">
-                            Nenhum pedido registrado ainda.
-                        </td>
-                    </tr>
-                `;
+            if (!window.customers || window.customers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-gray); padding: 2rem;">Nenhum pedido registrado ainda.</td></tr>';
                 return;
             }
             
-            window.customers.forEach(customer => {
+            window.customers.forEach(function(customer) {
                 const row = document.createElement('tr');
                 const date = new Date(customer.date).toLocaleString('pt-BR');
                 const statusClass = customer.status === 'paid' ? 'status-paid' : 'status-pending';
                 const statusText = customer.status === 'paid' ? 'PAGO' : 'PENDENTE';
                 
-                row.innerHTML = `
-                    <td>${date}</td>
-                    <td>${customer.name}<br><small>${customer.email}</small></td>
-                    <td>${customer.productName}</td>
-                    <td>R$ ${customer.amount.toFixed(2)}</td>
-                    <td class="${statusClass}">${statusText}</td>
-                    <td>${customer.gameId}</td>
-                `;
+                row.innerHTML = '<td>' + date + '</td>' +
+                    '<td>' + customer.customerName + '</td>' +
+                    '<td>' + customer.customerEmail + '</td>' +
+                    '<td>' + customer.productName + '</td>' +
+                    '<td>R$ ' + customer.amount.toFixed(2) + '</td>' +
+                    '<td class="' + statusClass + '">' + statusText + '</td>' +
+                    '<td>' + customer.gameId + '</td>';
                 tbody.appendChild(row);
             });
         }
@@ -1015,6 +1211,12 @@
         // =================== SISTEMA DE PAGAMENTO ===================
         
         function startPayment(productId) {
+            if (!currentUser) {
+                alert('Por favor, faça login para comprar!');
+                document.getElementById('authModal').classList.add('active');
+                return;
+            }
+            
             const product = window.products.find(p => p.id === productId);
             if (!product) return;
             
@@ -1030,11 +1232,11 @@
             
             // Atualizar modal de pagamento
             document.getElementById('paymentProductName').textContent = product.name;
-            document.getElementById('paymentAmount').textContent = `R$ ${product.price.toFixed(2)}`;
+            document.getElementById('paymentAmount').textContent = 'R$ ' + product.price.toFixed(2);
             document.getElementById('pixKeyDisplay').textContent = pixConfig.key;
-            
-            // Resetar formulário
-            document.getElementById('customerForm').reset();
+            document.getElementById('customerInfo').textContent = currentUser.name;
+            document.getElementById('customerEmailInfo').textContent = currentUser.email;
+            document.getElementById('customerGameId').value = '';
             
             // Abrir modal
             document.getElementById('paymentModal').classList.add('active');
@@ -1045,6 +1247,46 @@
             navigator.clipboard.writeText(key).then(() => {
                 alert('Chave PIX copiada para a área de transferência!');
             });
+        }
+        
+        function confirmOrder() {
+            const gameId = document.getElementById('customerGameId').value.trim();
+            
+            if (!gameId) {
+                alert('Por favor, informe seu ID no jogo!');
+                return;
+            }
+            
+            // Criar pedido
+            const order = {
+                id: Date.now(),
+                date: new Date().toISOString(),
+                customerName: currentUser.name,
+                customerEmail: currentUser.email,
+                customerId: currentUser.id,
+                gameId: gameId,
+                productName: currentProduct.name,
+                amount: currentProduct.price,
+                status: 'pending'
+            };
+            
+            // Adicionar aos clientes
+            window.customers.push(order);
+            saveCustomers();
+            
+            // Fechar modal
+            document.getElementById('paymentModal').classList.remove('active');
+            
+            // Mostrar instruções
+            alert('✅ PEDIDO REGISTRADO!\n\nOlá ' + currentUser.name + ',\n\nPague R$ ' + currentProduct.price.toFixed(2) + ' via PIX para:\n\n' + pixConfig.key + '\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ' + currentUser.email);
+            
+            // Atualizar lista de clientes no admin
+            if (isAdminLoggedIn) {
+                displayCustomers();
+            }
+            
+            // Resetar
+            currentProduct = null;
         }
         
         // =================== PAINEL ADMINISTRATIVO OCULTO ===================
@@ -1058,7 +1300,7 @@
                 }
             });
             
-            // Também adicionar clique triplo no logo
+            // Clique triplo no logo
             let clickCount = 0;
             let clickTimer;
             
@@ -1098,8 +1340,11 @@
             });
             
             // Ativar tab selecionada
-            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-            document.getElementById(`${tabName}Tab`).classList.add('active');
+            const tabBtn = document.querySelector('[data-tab="' + tabName + '"]');
+            const tabContent = document.getElementById(tabName + 'Tab');
+            
+            if (tabBtn) tabBtn.classList.add('active');
+            if (tabContent) tabContent.classList.add('active');
         }
         
         function switchTab(tabName) {
@@ -1139,10 +1384,10 @@
             
             const newProduct = {
                 id: window.products.length > 0 ? Math.max(...window.products.map(p => p.id)) + 1 : 1,
-                name,
-                game,
-                price,
-                image
+                name: name,
+                game: game,
+                price: price,
+                image: image
             };
             
             window.products.push(newProduct);
@@ -1180,66 +1425,104 @@
                 return;
             }
             
-            pixConfig = { type, key, name, city };
+            pixConfig = { type: type, key: key, name: name, city: city };
             savePixConfig();
             updatePixDisplay();
             
             alert('Configurações PIX salvas com sucesso!');
         }
         
-        function processCustomerOrder(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('customerName').value;
-            const email = document.getElementById('customerEmail').value;
-            const gameId = document.getElementById('customerGameId').value;
-            
-            if (!name || !email || !gameId || !currentProduct) {
-                alert('Preencha todos os campos!');
-                return;
-            }
-            
-            // Criar pedido
-            const order = {
-                id: Date.now(),
-                date: new Date().toISOString(),
-                name,
-                email,
-                gameId,
-                productName: currentProduct.name,
-                amount: currentProduct.price,
-                status: 'pending' // Inicialmente pendente
-            };
-            
-            // Adicionar aos clientes
-            window.customers.push(order);
-            saveCustomers();
-            
-            // Fechar modal
-            document.getElementById('paymentModal').classList.remove('active');
-            
-            // Mostrar instruções
-            alert(`✅ PEDIDO REGISTRADO!\n\nOlá ${name},\n\nPague R$ ${currentProduct.price.toFixed(2)} via PIX para:\n\n${pixConfig.key}\n\nEnvie o comprovante para nosso WhatsApp:\n(11) 99999-9999\n\nSeu código será enviado para: ${email}`);
-            
-            // Atualizar lista de clientes no admin
-            if (isAdminLoggedIn) {
-                displayCustomers();
-            }
-            
-            // Resetar
-            currentProduct = null;
-        }
-        
         function setupEventListeners() {
+            // Botão de usuário
+            document.getElementById('userBtn').addEventListener('click', function() {
+                if (currentUser) {
+                    if (confirm('Deseja sair da sua conta?')) {
+                        userLogout();
+                    }
+                } else {
+                    document.getElementById('authModal').classList.add('active');
+                }
+            });
+            
+            // Botão de login prompt
+            document.getElementById('loginPromptBtn').addEventListener('click', function() {
+                document.getElementById('authModal').classList.add('active');
+            });
+            
+            // Fechar modal auth
+            document.getElementById('closeAuthBtn').addEventListener('click', function() {
+                document.getElementById('authModal').classList.remove('active');
+            });
+            
+            // Tabs auth
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const form = this.getAttribute('data-form');
+                    
+                    // Ativar tab
+                    document.querySelectorAll('.auth-tab').forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Mostrar formulário
+                    document.querySelectorAll('.auth-form').forEach(f => {
+                        f.classList.remove('active');
+                    });
+                    document.getElementById(form + 'Form').classList.add('active');
+                });
+            });
+            
+            // Login de usuário
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (userLogin(email, password)) {
+                    this.reset();
+                } else {
+                    alert('E-mail ou senha incorretos!');
+                }
+            });
+            
+            // Cadastro de usuário
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirm = document.getElementById('registerConfirm').value;
+                
+                if (password !== confirm) {
+                    alert('As senhas não coincidem!');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('A senha deve ter no mínimo 6 caracteres!');
+                    return;
+                }
+                
+                const result = userRegister(name, email, password);
+                if (result.success) {
+                    this.reset();
+                    // Voltar para login
+                    document.querySelector('.auth-tab[data-form="login"]').click();
+                } else {
+                    alert(result.message);
+                }
+            });
+            
             // Fechar modal admin
-            document.getElementById('closeAdminBtn').addEventListener('click', () => {
+            document.getElementById('closeAdminBtn').addEventListener('click', function() {
                 document.getElementById('adminModal').classList.remove('active');
             });
             
-            // Botões das tabs
+            // Botões das tabs admin
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tab = btn.getAttribute('data-tab');
+                btn.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
                     switchTab(tab);
                 });
             });
@@ -1247,18 +1530,17 @@
             // Login admin
             document.getElementById('loginAdminBtn').addEventListener('click', adminLogin);
             
-            // Formulários
+            // Formulários admin
             document.getElementById('addProductForm').addEventListener('submit', addNewProduct);
             document.getElementById('pixConfigForm').addEventListener('submit', savePixConfigForm);
-            document.getElementById('customerForm').addEventListener('submit', processCustomerOrder);
             
             // Fechar modal de pagamento
-            document.getElementById('closePaymentBtn').addEventListener('click', () => {
+            document.getElementById('closePaymentBtn').addEventListener('click', function() {
                 document.getElementById('paymentModal').classList.remove('active');
             });
             
-            // Permitir login com Enter
-            document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+            // Permitir login admin com Enter
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') adminLogin();
             });
         }
